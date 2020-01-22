@@ -11,6 +11,7 @@ namespace SFA.DAS.Experiment.Function
 
         public ApplicationEventsImporter(IOptions<ConnectionStrings> connectionStrings)
         {
+            // Connection strings passed through here just to test DI / Config wiring is working.  Obvs can be taken out if / when not needed.
             _connectionStrings = connectionStrings.Value;
         }
 

@@ -50,6 +50,7 @@ namespace SFA.DAS.Experiment.Function
 
             builder.Services.AddOptions();
             builder.Services.Configure<ConnectionStrings>(config.GetSection("ConnectionStrings"));
+            builder.Services.Configure<MarketoConfiguration>(config.GetSection("Marketo"));
         }
     }
 }
