@@ -49,6 +49,7 @@ namespace SFA.DAS.Experiment.Function
                 .Build();
 
             builder.Services.AddOptions();
+            builder.Services.Configure<ConnectionStrings>(config.GetSection("ConnectionStrings"));
         }
     }
 }
