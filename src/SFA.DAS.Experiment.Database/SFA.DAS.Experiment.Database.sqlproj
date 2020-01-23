@@ -60,5 +60,5 @@
   </ItemGroup>
   <ItemGroup>
     <Build Include="Tables\CitizenApplicationEvents.sql" />
-  </ItemGroup
+  </ItemGroup>
 </Project>
