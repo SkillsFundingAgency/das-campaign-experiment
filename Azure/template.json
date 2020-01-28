@@ -194,7 +194,7 @@
                             },
                             {
                                 "name": "AppName",
-                                "value": "das-assessor-functions"
+                                "value": "das-campaign-experiment"
                             }
                         ]
                     }
@@ -207,7 +207,7 @@
         },
         {
             "apiVersion": "2017-05-10",
-            "name": "sql-server-deploy",
+            "name": "sql-database",
             "type": "Microsoft.Resources/deployments",
             "resourceGroup": "[parameters('sqlServerResourceGroupName')]",
             "properties": {
