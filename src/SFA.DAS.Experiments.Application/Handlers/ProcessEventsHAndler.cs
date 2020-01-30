@@ -46,8 +46,44 @@ namespace SFA.DAS.Experiments.Application.Handlers
             await _mediator.Send(new EventsProcessedNotification(_eventsService.GetUnprocessed(),
                                                                 (EventType)_marketoConfiguration.AppStartedConf.EventTypeId,
                                                                 _marketoConfiguration.AppStartedConf.ApiName,
-                                                               _marketoConfiguration.AppStartedConf.ActivityTypeId, _marketoConfiguration.AppStartedConf.IdField));
+                                                               _marketoConfiguration.AppStartedConf.ActivityTypeId,
+                                                                _marketoConfiguration.AppStartedConf.IdField));
 
+            await _mediator.Send(new EventsProcessedNotification(_eventsService.GetUnprocessed(),
+                (EventType)_marketoConfiguration.AppStartedConf.EventTypeId,
+                _marketoConfiguration.AppStartedConf.ApiName,
+                _marketoConfiguration.AppStartedConf.ActivityTypeId, 
+                _marketoConfiguration.AppStartedConf.IdField));
+
+            await _mediator.Send(new EventsProcessedNotification(_eventsService.GetUnprocessed(),
+                (EventType)_marketoConfiguration.AppCompletedConf.EventTypeId,
+                _marketoConfiguration.AppCompletedConf.ApiName,
+                _marketoConfiguration.AppCompletedConf.ActivityTypeId, 
+                _marketoConfiguration.AppCompletedConf.IdField));
+
+            await _mediator.Send(new EventsProcessedNotification(_eventsService.GetUnprocessed(),
+                (EventType)_marketoConfiguration.CanDetailsUpdatedConf.EventTypeId,
+                _marketoConfiguration.CanDetailsUpdatedConf.ApiName,
+                _marketoConfiguration.CanDetailsUpdatedConf.ActivityTypeId, 
+                _marketoConfiguration.CanDetailsUpdatedConf.IdField));
+
+            await _mediator.Send(new EventsProcessedNotification(_eventsService.GetUnprocessed(),
+                (EventType)_marketoConfiguration.CanAcountDeleted.EventTypeId,
+                _marketoConfiguration.CanAcountDeleted.ApiName,
+                _marketoConfiguration.CanAcountDeleted.ActivityTypeId, 
+                _marketoConfiguration.CanAcountDeleted.IdField));
+
+            await _mediator.Send(new EventsProcessedNotification(_eventsService.GetUnprocessed(),
+                (EventType)_marketoConfiguration.CanClosingEmailConf.EventTypeId,
+                _marketoConfiguration.CanClosingEmailConf.ApiName,
+                _marketoConfiguration.CanClosingEmailConf.ActivityTypeId, 
+                _marketoConfiguration.CanClosingEmailConf.IdField));
+
+            await _mediator.Send(new EventsProcessedNotification(_eventsService.GetUnprocessed(),
+                (EventType)_marketoConfiguration.CanSavedEmailConf.EventTypeId,
+                _marketoConfiguration.CanSavedEmailConf.ApiName,
+                _marketoConfiguration.CanSavedEmailConf.ActivityTypeId,
+                _marketoConfiguration.CanSavedEmailConf.IdField));
 
 
             return new Unit();
