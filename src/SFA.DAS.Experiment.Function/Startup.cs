@@ -84,6 +84,7 @@ namespace SFA.DAS.Experiment.Function
             builder.Services.AddTransient<IMarketoLeadService, MarketoLeadService>();
             builder.Services.AddTransient<IMarketoLeadMapping, MarketoLeadMapping>();
             builder.Services.AddTransient<IEventsService, EventsService>();
+            builder.Services.AddTransient<IMarketoActivityService, MarketoActivityService>();
 
         }
     }

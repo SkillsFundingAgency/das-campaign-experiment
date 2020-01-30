@@ -18,15 +18,15 @@ namespace SFA.DAS.Experiments.Application.Services.Marketo
     {
         private readonly IMarketoLeadClient _marketoLeadClient;
         private readonly IMarketoLeadMapping _marketoLeadMapping;
-        private readonly IOptions<MarketoConfiguration> _marketoOptions;
+        private readonly MarketoConfiguration _marketoOptions;
         private readonly ILogger<MarketoLeadService> _log;
 
-        public MarketoLeadService(IMarketoLeadClient marketoLeadClient, IMarketoLeadMapping marketoLeadMapping, ILogger<MarketoLeadService> log)
+        public MarketoLeadService(IMarketoLeadClient marketoLeadClient, IMarketoLeadMapping marketoLeadMapping, ILogger<MarketoLeadService> log, IOptions<MarketoConfiguration> marketoOptions)
         {
             _marketoLeadClient = marketoLeadClient;
             _marketoLeadMapping = marketoLeadMapping;
             _log = log;
-            //_marketoOptions = marketoOptions;
+            _marketoOptions = marketoOptions.Value;
         }
 
         public async Task<IEnumerable<NewLead>> PushLeads(IList<EventData> events)
@@ -42,7 +42,7 @@ namespace SFA.DAS.Experiments.Application.Services.Marketo
             {
                 var leadsRequest = new PushLeadToMarketoRequest();
 
-                leadsRequest.ProgramName = "BAME Experiment";
+                leadsRequest.ProgramName = _marketoOptions.ExpProgConfiguration.ProgramName;
                 leadsRequest.Input = leadsList.ToList();
 
                 var response = await _marketoLeadClient.PushLead(leadsRequest);
