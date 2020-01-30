@@ -218,29 +218,28 @@
                 },
                 "parameters": {
                     "databaseName": {
-                        "value": "[variables('databaseName')]",
-                        },
-                        "sqlServerName": {
-                            "value": "[parameters('sqlServerName')]"
-                        },
-                        "elasticPoolName": {
-                            "value": "[parameters('elasticPoolName')]"
-                        },
-                        "logAnalyticsSubscriptionId": {
-                            "value": "[parameters('logAnalyticsSubscriptionId')]"
-                        },
-                        "logAnalyticsResourceGroup": {
-                            "value": "[parameters('logAnalyticsResourceGroup')]"
-                        },
-                        "logAnalyticsWorkspaceName": {
-                            "value": "[parameters('logAnalyticsWorkspaceName')]"
-                        },
-                        "databaseSkuName": {
-                            "value": "[parameters('databaseSkuName')]"
-                        },
-                        "databaseTier": {
-                            "value": "[parameters('databaseTier')]"
-                        }
+                        "value": "[variables('databaseName')]"
+                    },
+                    "sqlServerName": {
+                        "value": "[parameters('sqlServerName')]"
+                    },
+                    "elasticPoolName": {
+                        "value": "[parameters('elasticPoolName')]"
+                    },
+                    "logAnalyticsSubscriptionId": {
+                        "value": "[parameters('logAnalyticsSubscriptionId')]"
+                    },
+                    "logAnalyticsResourceGroup": {
+                        "value": "[parameters('logAnalyticsResourceGroup')]"
+                    },
+                    "logAnalyticsWorkspaceName": {
+                        "value": "[parameters('logAnalyticsWorkspaceName')]"
+                    },
+                    "databaseSkuName": {
+                        "value": "[parameters('databaseSkuName')]"
+                    },
+                    "databaseTier": {
+                        "value": "[parameters('databaseTier')]"
                     }
                 }
             }
