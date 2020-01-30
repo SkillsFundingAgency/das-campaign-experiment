@@ -1,4 +1,4 @@
-CREATE TABLE [dbo].[CitizenApplicationEvents](
+﻿CREATE TABLE [dbo].[CitizenApplicationEvents](
 	[Id] [uniqueidentifier] NOT NULL,
 	[EventDate] [datetime2](7) NOT NULL,
 	[EventType] [int] NOT NULL,

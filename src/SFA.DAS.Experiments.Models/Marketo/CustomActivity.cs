@@ -7,6 +7,7 @@ using System.Runtime.Serialization;
 using System.Text;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
+using Attribute = Marketo.Api.Client.Model.Attribute;
 
 namespace SFA.DAS.Experiments.Models.Marketo
 {

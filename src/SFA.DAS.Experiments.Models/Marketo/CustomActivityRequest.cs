@@ -19,7 +19,7 @@ namespace SFA.DAS.Experiments.Models.Marketo
         /// Initializes a new instance of the <see cref="CustomActivityRequest" /> class.
         /// </summary>
         [JsonConstructor]
-        protected CustomActivityRequest() { }
+        public CustomActivityRequest() { }
         /// <summary>
         /// Initializes a new instance of the <see cref="CustomActivityRequest" /> class.
         /// </summary>

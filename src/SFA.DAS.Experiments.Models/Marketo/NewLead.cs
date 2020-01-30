@@ -11,8 +11,14 @@ namespace SFA.DAS.Experiments.Models.Marketo
     /// Lead record.  Always contains id, but may have any number of other fields, depending on the fields available in the target instance.
     /// </summary>
     [DataContract]
-    public partial class Lead :  IEquatable<Lead>, IValidatableObject
+    public partial class NewLead :  IEquatable<NewLead>, IValidatableObject
     {
+        public NewLead()
+        {
+
+        }
+
+        public int Id { get; set; }
 
         /// <summary>
         /// Unique integer id of a lead record
@@ -64,7 +70,7 @@ namespace SFA.DAS.Experiments.Models.Marketo
         /// <returns>Boolean</returns>
         public override bool Equals(object input)
         {
-            return this.Equals(input as Lead);
+            return this.Equals(input as NewLead);
         }
 
         /// <summary>
@@ -72,7 +78,7 @@ namespace SFA.DAS.Experiments.Models.Marketo
         /// </summary>
         /// <param name="input">Instance of Lead to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(Lead input)
+        public bool Equals(NewLead input)
         {
             if (input == null)
                 return false;

@@ -7,7 +7,7 @@ using NLog.Config;
 using NLog.Targets;
 using SFA.DAS.NLog.Targets.Redis.DotNetCore;
 
-namespace SFA.DAS.Assessor.Functions.Infrastructure
+namespace SFA.DAS.Experiment.Function.Infrastructure
 {
     public class NLogConfiguration
     {

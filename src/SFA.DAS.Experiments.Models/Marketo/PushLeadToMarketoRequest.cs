@@ -24,7 +24,7 @@ namespace SFA.DAS.Experiments.Models.Marketo
         /// <param name="programStatus">programStatus.</param>
         /// <param name="reason">reason.</param>
         /// <param name="source">source.</param>
-        public PushLeadToMarketoRequest(List<Lead> input = default(List<Lead>), string lookupField = default(string), string partitionName = default(string), string programName = default(string), string programStatus = default(string), string reason = default(string), string source = default(string))
+        public PushLeadToMarketoRequest(List<NewLead> input = default(List<NewLead>), string lookupField = default(string), string partitionName = default(string), string programName = default(string), string programStatus = default(string), string reason = default(string), string source = default(string))
         {
             this.Input = input;
             this.LookupField = lookupField;
@@ -39,7 +39,7 @@ namespace SFA.DAS.Experiments.Models.Marketo
         /// Gets or Sets Input
         /// </summary>
         [DataMember(Name="input", EmitDefaultValue=false)]
-        public List<Lead> Input { get; set; }
+        public List<NewLead> Input { get; set; }
 
         /// <summary>
         /// Gets or Sets LookupField
