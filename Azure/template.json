@@ -219,6 +219,7 @@
                 "parameters": {
                     "databaseName": {
                         "value": "[variables('databaseName')]",
+                        },
                         "sqlServerName": {
                             "value": "[parameters('sqlServerName')]"
                         },
