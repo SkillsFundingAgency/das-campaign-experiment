@@ -29,10 +29,11 @@ namespace SFA.DAS.Experiments.Application.Services
           return _experimentsContext.Events.Where(w => w.Processed == false).ToList();
         }
 
-        public async Task UpdateAll(List<EventData> events)
+        public void UpdateAll(List<EventData> events)
         {
+
            _experimentsContext.UpdateRange(events);
-          await  _experimentsContext.SaveChangesAsync();
+           _experimentsContext.SaveChanges();
         }
     }
 }

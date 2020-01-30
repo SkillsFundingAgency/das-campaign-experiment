@@ -7,7 +7,7 @@ namespace SFA.DAS.Experiments.Application.Infrastructure.Interfaces.Marketo
     [Headers("Authorization: Bearer","Content-Type: application/json")]
     public interface IMarketoActivityClient
     {
-        [Post("/activity/external.json")]
+        [Post("/activities/external.json")]
         Task<ResponseOfLead> AddExternal(CustomActivityRequest activity);
        
     }

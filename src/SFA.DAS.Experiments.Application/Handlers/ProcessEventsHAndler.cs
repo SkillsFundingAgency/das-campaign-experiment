@@ -39,10 +39,10 @@ namespace SFA.DAS.Experiments.Application.Handlers
 
             _eventsService.UpdateAll(events);
 
-            await _mediator.Publish(new EventsProcessedNotification(_eventsService.GetUnprocessed()));
+            await _mediator.Send(new EventsProcessedNotification(_eventsService.GetUnprocessed()));
 
 
-            return Unit.Value;
+            return new Unit();
        }
     }
 }

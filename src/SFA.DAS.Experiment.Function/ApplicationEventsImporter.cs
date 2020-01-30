@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 using MediatR;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Extensions.Logging;
@@ -18,13 +19,13 @@ namespace SFA.DAS.Experiment.Function
         }
 
         [FunctionName("ApplicationEventsImporter")]
-        public void Run([TimerTrigger("* */3 * * * *")]TimerInfo myTimer, ILogger log)
+        public async Task Run([TimerTrigger("* * */1 * * *")]TimerInfo myTimer, ILogger log)
         {
             log.LogInformation($"ApplicationEventsImporter Timer trigger function executed at: {DateTime.Now}");
 
             try
             {
-                _mediator.Send(new ProcessEventsCommand());
+               await _mediator.Send(new ProcessEventsCommand());
                 log.LogInformation($"Events processesing completed at {DateTime.Now}");
 
             }

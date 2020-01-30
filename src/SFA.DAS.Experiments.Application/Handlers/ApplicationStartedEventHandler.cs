@@ -17,23 +17,21 @@ using Attribute = Marketo.Api.Client.Model.Attribute;
 
 namespace SFA.DAS.Experiments.Application.Handlers
 {
-   public class ApplicationStartedEventHandler : INotificationHandler<EventsProcessedNotification>
+   public class ApplicationStartedEventHandler : IRequestHandler<EventsProcessedNotification>
    {
-       private readonly IMediator _mediator;
        private readonly ILogger<ApplicationStartedEventHandler> _log;
        private readonly IMarketoActivityClient _activityService;
        private readonly IEventsService _eventsService;
 
-       public ApplicationStartedEventHandler(IMediator mediator, ILogger<ApplicationStartedEventHandler> log, IMarketoActivityClient activityService, IEventsService eventsService)
+       public ApplicationStartedEventHandler( ILogger<ApplicationStartedEventHandler> log, IMarketoActivityClient activityService, IEventsService eventsService)
        {
-           _mediator = mediator;
            _log = log;
            _activityService = activityService;
            _eventsService = eventsService;
        }
 
 
-       public async Task Handle(EventsProcessedNotification notification, CancellationToken cancellationToken)
+       public async Task<Unit> Handle(EventsProcessedNotification notification, CancellationToken cancellationToken)
        {
            var startedEvents = notification.Events.Where(w => w.EventType == EventType.CandidateApplicationStart && w.Processed == false).ToList().SplitList();
 
@@ -83,12 +81,12 @@ namespace SFA.DAS.Experiments.Application.Handlers
 
                 var response = await _activityService.AddExternal(activities);
 
-                if(response.Success == false)
+                    if(response.Success == false)
                 {
                     _log.LogError($"Unable to add activities, errors: {String.Join("\n",response.Errors)}");
                 }
 
-                var successfulUpdates = notification.Events.Where(p => response.Result.Where(w => w.Status != null).All(p2 => p2.Id == p.MarketoId));
+                var successfulUpdates = notification.Events.Where(p => response.Result.Where(w => w.Status != null).All(p2 => p.Processed = true));
                 _eventsService.UpdateAll(successfulUpdates.ToList());
 
                 var unsuccessfulUpdates = response.Result.Where(p => p.Status == null);
@@ -97,7 +95,7 @@ namespace SFA.DAS.Experiments.Application.Handlers
 
             }
 
-
+           return new Unit();
        }
    }
 }

@@ -67,7 +67,7 @@ namespace SFA.DAS.Experiment.Function
             builder.Services.Configure<MarketoConfiguration>(config.GetSection("Marketo"));
 
             builder.Services.AddDbContext<ExperimentsContext>(options =>
-                options.UseSqlServer(config.GetConnectionString("Sql")));
+                options.UseSqlServer(config.GetConnectionString("Sql")),ServiceLifetime.Transient);
 
             var marketoConfig = config.GetSection("Marketo").Get<MarketoConfiguration>();
             builder.Services.AddTransient<OAuthHttpClientHandler>();

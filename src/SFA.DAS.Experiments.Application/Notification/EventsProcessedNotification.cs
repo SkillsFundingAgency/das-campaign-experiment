@@ -8,7 +8,7 @@ using SFA.DAS.Experiments.Application.Queries;
 
 namespace SFA.DAS.Experiments.Application.Handlers
 {
-   public class EventsProcessedNotification : INotification
+   public class EventsProcessedNotification : IRequest
     {
         public IList<EventData> Events { get; set; }
         public EventsProcessedNotification(IList<EventData> processedEvents)

@@ -7,6 +7,6 @@ namespace SFA.DAS.Experiments.Application.Services
     public interface IEventsService
     {
         IList<EventData> GetUnprocessed();
-        Task UpdateAll(List<EventData> events);
+        void UpdateAll(List<EventData> events);
     }
 }
