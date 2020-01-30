@@ -25,7 +25,7 @@ namespace SFA.DAS.Experiments.Application.Domain.Models
         public string VacancyId { get; set; }
         public string VacancyTitle { get; set; }
         public string VacancyReference { get; set; }
-        public DateTime VacancyCloseDate { get; set; }
+        public DateTime? VacancyCloseDate { get; set; }
         public bool Processed { get; set; }
         public int? MarketoId { get; set; }
 

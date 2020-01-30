@@ -30,7 +30,7 @@ namespace SFA.DAS.Experiments.Application.Services.Marketo
         public async Task<IList<EventData>> AddActivities(IList<EventData> allEvents,
             IEnumerable<IList<EventData>> startedEvents, int activityTypeId, string apiName, string fieldId)
         {
-            IList<EventData> successfulUpdates = new List<EventData>();
+            List<EventData> successfulUpdates = new List<EventData>();
 
 
             foreach (var eventList in startedEvents)
@@ -46,7 +46,7 @@ namespace SFA.DAS.Experiments.Application.Services.Marketo
                     _log.LogError($"Unable to add activities, errors: {String.Join("\n", response.Errors)}");
                 }
 
-                successfulUpdates.Concat(eventList.Where(p =>
+                successfulUpdates.AddRange(eventList.Where(p =>
                     response.Result.Where(w => w.Status != null).All(p2 => p.Processed = true)));
 
                 var unsuccessfulUpdates = response.Result.Where(p => p.Status == null);
@@ -64,7 +64,7 @@ namespace SFA.DAS.Experiments.Application.Services.Marketo
             var attributes = new List<Attribute>();
 
 
-            if (String.IsNullOrWhiteSpace(eventData.CandidateId) == false)
+            if (String.IsNullOrWhiteSpace(eventData.CandidateId) == false && fieldId.ToLower() != "candidateid")
             {
                 attributes.Add(new Attribute()
                 {
@@ -73,7 +73,7 @@ namespace SFA.DAS.Experiments.Application.Services.Marketo
                 });
             }
 
-            if (String.IsNullOrWhiteSpace(eventData.CandidateId) == false)
+            if (String.IsNullOrWhiteSpace(eventData.VacancyReference) == false)
             {
                 attributes.Add(new Attribute()
                 {
@@ -82,7 +82,7 @@ namespace SFA.DAS.Experiments.Application.Services.Marketo
                 });
             }
 
-            if (String.IsNullOrWhiteSpace(eventData.CandidateId) == false)
+            if (String.IsNullOrWhiteSpace(eventData.VacancyId) == false)
             {
                 attributes.Add(new Attribute()
                 {
@@ -91,7 +91,7 @@ namespace SFA.DAS.Experiments.Application.Services.Marketo
                 });
             }
 
-            if (String.IsNullOrWhiteSpace(eventData.CandidateId) == false)
+            if (String.IsNullOrWhiteSpace(eventData.VacancyTitle) == false)
             {
                 attributes.Add(new Attribute()
                 {
@@ -100,12 +100,12 @@ namespace SFA.DAS.Experiments.Application.Services.Marketo
                 });
             }
 
-            if (String.IsNullOrWhiteSpace(eventData.CandidateId) == false)
+            if (eventData.VacancyCloseDate.HasValue)
             {
                 attributes.Add(new Attribute()
                 {
                     ApiName = "ESFA_vacancyCloseDate",
-                    Value = eventData.VacancyCloseDate.ToString("s", System.Globalization.CultureInfo.InvariantCulture)
+                    Value = eventData.VacancyCloseDate.Value.ToString("s", System.Globalization.CultureInfo.InvariantCulture)
                 });
             }
 

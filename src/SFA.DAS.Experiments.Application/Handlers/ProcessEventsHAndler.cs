@@ -39,7 +39,7 @@ namespace SFA.DAS.Experiments.Application.Handlers
             var processedEvents = await _mediator.Send(new PushMarketoLeadsRequest(events));
 
 
-            events.ForEach(async e => e.MarketoId = processedEvents.Leads.Single(w => w.Email == e.CandidateEmailAddress).Id);
+            events.ForEach(async e => e.MarketoId = processedEvents.Leads.FirstOrDefault(w => w.Email == e.CandidateEmailAddress).Id);
 
             _eventsService.UpdateAll(events);
 
