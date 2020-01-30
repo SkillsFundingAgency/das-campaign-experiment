@@ -12,7 +12,7 @@
 	[VacancyReference] [nvarchar](250) NULL,
 	[VacancyCloseDate] [datetime2](7) NULL,
 	
-) ON [PRIMARY]
+)
 GO
 
 ALTER TABLE [dbo].[CitizenApplicationEvents] ADD  CONSTRAINT [DF_Citizens_Id]  DEFAULT (newid()) FOR [Id]
