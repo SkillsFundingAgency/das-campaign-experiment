@@ -10,7 +10,8 @@
 	[VacancyId] [nvarchar](250) NULL,
 	[VacancyTitle] [nvarchar](250) NULL,
 	[VacancyReference] [nvarchar](250) NULL,
-	[VacancyCloseDate] [datetime2](7) NULL,
+	[VacancyCloseDate] [datetime2](7) NULL, 
+    CONSTRAINT [PK_CitizenApplicationEvents] PRIMARY KEY CLUSTERED ([Id]),
 	
 )
 GO
