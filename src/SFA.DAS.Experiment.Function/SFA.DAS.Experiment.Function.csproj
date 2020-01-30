@@ -21,6 +21,8 @@
     <PackageReference Include="refit" Version="4.7.51" />
     
     <PackageReference Include="Refit.HttpClientFactory" Version="4.7.51" />
+    
+    <PackageReference Include="SFA.DAS.Configuration.AzureTableStorage" Version="3.0.77" />
     <PackageReference Include="SFA.DAS.NLog.Targets.Redis" Version="1.2.1" />
   </ItemGroup>
   <ItemGroup>
