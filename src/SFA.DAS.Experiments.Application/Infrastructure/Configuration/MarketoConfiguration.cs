@@ -6,12 +6,12 @@ public class MarketoConfiguration
         public virtual ExpProgConfiguration ExpProgConfiguration { get; set; }
         public virtual string ApiIdentityBaseUrl { get; set; }
 
-        //public virtual ActivityConfig AppStartedConf { get; set; }
-        //public virtual ActivityConfig AppCompletedConf { get; set; }
-        //public virtual ActivityConfig CanDetailsUpdatedConf { get; set; }
-        //public virtual ActivityConfig CanAcountDeleted { get; set; }
-        //public virtual ActivityConfig CanClosingEmailConf { get; set; }
-        //public virtual ActivityConfig CanSavedEmailConf { get; set; }
+    public virtual ActivityConfig AppStartedConf { get; set; }
+    public virtual ActivityConfig AppCompletedConf { get; set; }
+    public virtual ActivityConfig CanDetailsUpdatedConf { get; set; }
+    public virtual ActivityConfig CanAcountDeleted { get; set; }
+    public virtual ActivityConfig CanClosingEmailConf { get; set; }
+    public virtual ActivityConfig CanSavedEmailConf { get; set; }
 
 }
 
