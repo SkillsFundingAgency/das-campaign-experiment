@@ -46,9 +46,8 @@ namespace SFA.DAS.Experiments.Application.Services.Marketo
                     _log.LogError($"Unable to add activities, errors: {String.Join("\n", response.Errors)}");
                 }
 
-                successfulUpdates.Concat(allEvents.Where(p =>
+                successfulUpdates.Concat(eventList.Where(p =>
                     response.Result.Where(w => w.Status != null).All(p2 => p.Processed = true)));
-
 
                 var unsuccessfulUpdates = response.Result.Where(p => p.Status == null);
 

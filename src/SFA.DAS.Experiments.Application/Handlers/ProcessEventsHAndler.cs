@@ -43,11 +43,6 @@ namespace SFA.DAS.Experiments.Application.Handlers
 
             _eventsService.UpdateAll(events);
 
-            await _mediator.Send(new EventsProcessedNotification(_eventsService.GetUnprocessed(),
-                                                                (EventType)_marketoConfiguration.AppStartedConf.EventTypeId,
-                                                                _marketoConfiguration.AppStartedConf.ApiName,
-                                                               _marketoConfiguration.AppStartedConf.ActivityTypeId,
-                                                                _marketoConfiguration.AppStartedConf.IdField));
 
             await _mediator.Send(new EventsProcessedNotification(_eventsService.GetUnprocessed(),
                 (EventType)_marketoConfiguration.AppStartedConf.EventTypeId,
