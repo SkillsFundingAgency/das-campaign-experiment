@@ -26,7 +26,7 @@ namespace SFA.DAS.Experiments.Application.Services
 
             _experimentsContext.ChangeTracker.DetectChanges();
 
-          return _experimentsContext.Events.Where(w => w.Processed == false).ToList();
+          return _experimentsContext.Events.Where(w => w.Processed == false).OrderBy(e => e.EventDate).ToList();
         }
 
         public void UpdateAll(List<EventData> events)

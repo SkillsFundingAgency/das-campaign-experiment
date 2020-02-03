@@ -57,12 +57,12 @@ namespace SFA.DAS.Experiment.Function
                 .AddConfiguration(configuration)
                 .AddEnvironmentVariables()
                 .AddAzureTableStorage(options =>
-                    {
-                        options.ConfigurationKeys = new[] { tempConfig.GetValue<string>("AppName") };
-                        options.EnvironmentNameEnvironmentVariableName = "EnvironmentName";
-                        options.StorageConnectionStringEnvironmentVariableName = "ConfigurationStorageConnectionString";
-                        options.PreFixConfigurationKeys = false;
-                    })
+                {
+                    options.ConfigurationKeys = new[] { tempConfig.GetValue<string>("AppName") };
+                    options.EnvironmentNameEnvironmentVariableName = "EnvironmentName";
+                    options.StorageConnectionStringEnvironmentVariableName = "ConfigurationStorageConnectionString";
+                    options.PreFixConfigurationKeys = false;
+                })
                 .Build();
 
             builder.Services.AddOptions();
@@ -79,7 +79,7 @@ namespace SFA.DAS.Experiment.Function
                 .ConfigureHttpClient(c => c.BaseAddress = new Uri(marketoConfig.ApiBaseUrl)).AddHttpMessageHandler<OAuthHttpClientHandler>();
 
             builder.Services.AddRefitClient<IMarketoActivityClient>()
-               .ConfigureHttpClient(c => c.BaseAddress = new Uri(marketoConfig.ApiBaseUrl)).AddHttpMessageHandler<OAuthHttpClientHandler>();
+                .ConfigureHttpClient(c => c.BaseAddress = new Uri(marketoConfig.ApiBaseUrl)).AddHttpMessageHandler<OAuthHttpClientHandler>();
 
 
             builder.Services.AddMediatR(typeof(ProcessEventsCommand));
@@ -88,7 +88,6 @@ namespace SFA.DAS.Experiment.Function
             builder.Services.AddTransient<IMarketoLeadMapping, MarketoLeadMapping>();
             builder.Services.AddTransient<IEventsService, EventsService>();
             builder.Services.AddTransient<IMarketoActivityService, MarketoActivityService>();
-
         }
     }
 }
