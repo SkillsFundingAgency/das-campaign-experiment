@@ -19,7 +19,7 @@ namespace SFA.DAS.Experiment.Function
         }
 
         [FunctionName("ApplicationEventsImporter")]
-        public async Task Run([TimerTrigger("0 0 */1 * * *")]TimerInfo myTimer, ILogger log)
+        public async Task Run([TimerTrigger("0 */2 * * * *")]TimerInfo myTimer, ILogger log)
         {
             log.LogInformation($"ApplicationEventsImporter Timer trigger function executed at: {DateTime.Now}");
 

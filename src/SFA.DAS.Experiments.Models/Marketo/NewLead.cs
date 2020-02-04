@@ -40,6 +40,12 @@ namespace SFA.DAS.Experiments.Models.Marketo
         public string LastName { get; set; }
 
         /// <summary>
+        /// Gets or Sets Membership
+        /// </summary>
+        [DataMember(Name = "vacancyId", EmitDefaultValue = false)]
+        public string VacancyId { get; set; }
+
+        /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
         /// <returns>String presentation of the object</returns>
@@ -50,6 +56,7 @@ namespace SFA.DAS.Experiments.Models.Marketo
             sb.Append("  Email: ").Append(Email).Append("\n");
             sb.Append("  FirstName: ").Append(FirstName).Append("\n");
             sb.Append("  LastName: ").Append(LastName).Append("\n");
+            sb.Append("  VacancyId: ").Append(VacancyId).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -97,6 +104,11 @@ namespace SFA.DAS.Experiments.Models.Marketo
                     this.LastName == input.LastName ||
                     (this.LastName != null &&
                     this.LastName.Equals(input.LastName))
+                ) && 
+                (
+                    this.VacancyId == input.VacancyId ||
+                    (this.VacancyId != null &&
+                    this.VacancyId.Equals(input.VacancyId))
                 );
         }
 
@@ -114,6 +126,8 @@ namespace SFA.DAS.Experiments.Models.Marketo
                     hashCode = hashCode * 59 + this.FirstName.GetHashCode();
                 if (this.LastName != null)
                     hashCode = hashCode * 59 + this.LastName.GetHashCode();
+                if (this.VacancyId != null)
+                    hashCode = hashCode * 59 + this.VacancyId.GetHashCode();
                 return hashCode;
             }
         }
