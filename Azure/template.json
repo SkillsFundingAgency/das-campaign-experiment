@@ -194,7 +194,7 @@
                             },
                             {
                                 "name": "AppName",
-                                "value": "SFA.DAS.Experiment.Function"
+                                "value": "SFA.DAS.Campaign.Experiment"
                             }
                         ]
                     }
