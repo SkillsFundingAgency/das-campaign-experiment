@@ -7,6 +7,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using SFA.DAS.Experiments.Application.Domain.Interfaces;
 using SFA.DAS.Experiments.Application.Domain.Models;
+using SFA.DAS.Experiments.Application.Domain.Models.Events;
 using SFA.DAS.Experiments.Application.Helpers;
 using SFA.DAS.Experiments.Application.Infrastructure.Interfaces.Marketo;
 using SFA.DAS.Experiments.Application.Mapping.Interfaces;
@@ -63,59 +64,79 @@ namespace SFA.DAS.Experiments.Application.Services.Marketo
 
             var attributes = new List<Attribute>();
 
-
-            if (String.IsNullOrWhiteSpace(eventData.CandidateId) == false && fieldId.ToLower() != "candidateid")
+            if (eventData.EventType == EventType.CandidateDetailsChange)
             {
                 attributes.Add(new Attribute()
                 {
-                    ApiName = "ESFA_candidateID",
-                    Value = eventData.CandidateId
+                    ApiName = "ESFA_candidateFirstName",
+                    Value = eventData.CandidateFirstName
                 });
-            }
-
-            if (String.IsNullOrWhiteSpace(eventData.VacancyReference) == false)
-            {
                 attributes.Add(new Attribute()
                 {
-                    ApiName = "ESFA_vacancyReference",
-                    Value = eventData.VacancyReference
+                    ApiName = "ESFA_candidateSurname",
+                    Value = eventData.CandidateSurname
                 });
-            }
-
-            if (String.IsNullOrWhiteSpace(eventData.VacancyId) == false)
-            {
                 attributes.Add(new Attribute()
                 {
-                    ApiName = "ESFA_vacancyID",
-                    Value = eventData.VacancyId
+                    ApiName = "ESFA_candidateEmailAddress",
+                    Value = eventData.CandidateEmailAddress
                 });
             }
-
-            if (String.IsNullOrWhiteSpace(eventData.VacancyTitle) == false)
+            else
             {
-                attributes.Add(new Attribute()
+                if (String.IsNullOrWhiteSpace(eventData.CandidateId) == false && fieldId.ToLower() != "candidateid")
                 {
-                    ApiName = "ESFA_vacancyTitle",
-                    Value = eventData.VacancyTitle
-                });
-            }
+                    attributes.Add(new Attribute()
+                    {
+                        ApiName = "ESFA_candidateID",
+                        Value = eventData.CandidateId
+                    });
+                }
 
-            if (eventData.VacancyCloseDate.HasValue)
-            {
-                attributes.Add(new Attribute()
+                if (String.IsNullOrWhiteSpace(eventData.VacancyReference) == false)
                 {
-                    ApiName = "ESFA_vacancyCloseDate",
-                    Value = eventData.VacancyCloseDate.Value.ToString("s", System.Globalization.CultureInfo.InvariantCulture)
-                });
-            }
+                    attributes.Add(new Attribute()
+                    {
+                        ApiName = "ESFA_vacancyReference",
+                        Value = eventData.VacancyReference
+                    });
+                }
 
+                if (String.IsNullOrWhiteSpace(eventData.VacancyId) == false)
+                {
+                    attributes.Add(new Attribute()
+                    {
+                        ApiName = "ESFA_vacancyID",
+                        Value = eventData.VacancyId
+                    });
+                }
+
+                if (String.IsNullOrWhiteSpace(eventData.VacancyTitle) == false)
+                {
+                    attributes.Add(new Attribute()
+                    {
+                        ApiName = "ESFA_vacancyTitle",
+                        Value = eventData.VacancyTitle
+                    });
+                }
+
+                if (eventData.VacancyCloseDate.HasValue)
+                {
+                    attributes.Add(new Attribute()
+                    {
+                        ApiName = "ESFA_vacancyCloseDate",
+                        Value = eventData.VacancyCloseDate.Value.ToString("s", System.Globalization.CultureInfo.InvariantCulture)
+                    });
+                }
+
+            }
 
             var activity = new CustomActivity()
             {
                 LeadId = Convert.ToInt64(eventData.MarketoId),
                 ActivityDate = eventData.EventDate.ToString("s", System.Globalization.CultureInfo.InvariantCulture),
                 ActivityTypeId = activityTypeId,
-                PrimaryAttributeValue = GetPropValue(eventData,fieldId),
+                PrimaryAttributeValue = GetPropValue(eventData, fieldId),
                 ApiName = apiName,
                 Attributes = attributes
 

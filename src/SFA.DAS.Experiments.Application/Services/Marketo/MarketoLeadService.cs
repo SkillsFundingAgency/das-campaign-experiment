@@ -35,7 +35,6 @@ namespace SFA.DAS.Experiments.Application.Services.Marketo
                 .Select(g => _marketoLeadMapping.Map(g.First()))
                 .ToList();
 
-
             var splitList = Leads.SplitList().ToList();
 
             foreach (var leadsList in splitList)

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using SFA.DAS.Experiments.Application.Domain.Models;
+using SFA.DAS.Experiments.Application.Domain.Models.Events;
 
 namespace SFA.DAS.Experiments.Application.Services
 {
@@ -26,7 +27,10 @@ namespace SFA.DAS.Experiments.Application.Services
 
             _experimentsContext.ChangeTracker.DetectChanges();
 
-          return _experimentsContext.Events.Where(w => w.Processed == false).OrderBy(e => e.EventDate).ToList();
+          return _experimentsContext.Events.Where(w => w.Processed == false && (
+              w.EventType == EventType.CandidateApplicationStart || 
+              w.EventType == EventType.CandidateApplicationSubmit 
+              )).OrderBy(e => e.EventDate).ToList();
         }
 
         public void UpdateAll(List<EventData> events)
