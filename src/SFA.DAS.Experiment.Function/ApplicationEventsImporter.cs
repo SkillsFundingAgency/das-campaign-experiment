@@ -1,24 +1,40 @@
 using System;
+using System.Threading.Tasks;
+using MediatR;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Microsoft.OData.Edm;
+using SFA.DAS.Experiments.Application.Handlers;
 
 namespace SFA.DAS.Experiment.Function
 {
     public class ApplicationEventsImporter
     {
-        private readonly ConnectionStrings _connectionStrings;
+        private readonly IMediator _mediator;
 
-        public ApplicationEventsImporter(IOptions<ConnectionStrings> connectionStrings)
+        public ApplicationEventsImporter(IMediator mediator)
         {
-            // Connection strings passed through here just to test DI / Config wiring is working.  Obvs can be taken out if / when not needed.
-            _connectionStrings = connectionStrings.Value;
+            _mediator = mediator;
         }
 
         [FunctionName("ApplicationEventsImporter")]
-        public void Run([TimerTrigger("0 */5 * * * *")]TimerInfo myTimer, ILogger log)
+        public async Task Run([TimerTrigger("0 */2 * * * *")]TimerInfo myTimer, ILogger log)
         {
-            log.LogInformation($"C# Timer trigger function executed at: {DateTime.Now}");
+            log.LogInformation($"ApplicationEventsImporter Timer trigger function executed at: {DateTime.Now}");
+
+            try
+            {
+               await _mediator.Send(new ProcessEventsCommand());
+                log.LogInformation($"Events processesing completed at {DateTime.Now}");
+
+            }
+            catch (Exception e)
+            {
+                log.LogError(e,"Unable to process Event data");
+                throw;
+            }
+            
         }
     }
 }
