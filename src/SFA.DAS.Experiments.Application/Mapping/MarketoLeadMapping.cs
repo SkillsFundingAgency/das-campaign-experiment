@@ -19,7 +19,6 @@ namespace SFA.DAS.Experiments.Application.Mapping.Interfaces
                 newLead.Email = data.CandidateEmailAddress;
                 newLead.FirstName = data.CandidateFirstName;
                 newLead.LastName = data.CandidateSurname;
-                newLead.VacancyId = data.VacancyId;
             }
 
             if (data.MarketoId != null)
