@@ -13,5 +13,18 @@ namespace SFA.DAS.Experiments.Application.Helpers
                 yield return locations.GetRange(i, Math.Min(nSize, locations.Count - i));
             }
         }
+
+        public static IEnumerable<TSource> DistinctBy<TSource, TKey>
+            (this IEnumerable<TSource> source, Func<TSource, TKey> keySelector)
+        {
+            HashSet<TKey> seenKeys = new HashSet<TKey>();
+            foreach (TSource element in source)
+            {
+                if (seenKeys.Add(keySelector(element)))
+                {
+                    yield return element;
+                }
+            }
+        }
     }
 }

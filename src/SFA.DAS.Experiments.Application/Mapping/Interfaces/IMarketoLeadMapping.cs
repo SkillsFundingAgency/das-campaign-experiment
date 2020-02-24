@@ -11,5 +11,7 @@ namespace SFA.DAS.Experiments.Application.Mapping.Interfaces
     public interface IMarketoLeadMapping
     {
         NewLead Map(EventData data);
+
+        Lead MapLead(EventData data);
     }
 }

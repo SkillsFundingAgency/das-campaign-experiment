@@ -20,12 +20,9 @@ namespace SFA.DAS.Experiments.Models.Marketo
         /// <param name="membership">membership.</param>
         /// <param name="reason">reason.</param>
         /// <param name="status">Status of the operation performed on the record.</param>
-        public Lead(int id = default(int), ProgramMembership membership = default(ProgramMembership), Reason reason = default(Reason), string status = default(string))
+        public Lead(int id = default(int))
         {
             this.Id = id;
-            this.Membership = membership;
-            this.Reason = reason;
-            this.Status = status;
         }
         
         /// <summary>
@@ -36,22 +33,35 @@ namespace SFA.DAS.Experiments.Models.Marketo
         public int Id { get; set; }
 
         /// <summary>
+        /// Unique integer id of a lead record
+        /// </summary>
+        /// <value>Unique integer id of a lead record</value>
+        [DataMember(Name = "email", EmitDefaultValue = false)]
+        public string Email { get; set; }
+
+        /// <summary>
         /// Gets or Sets Membership
         /// </summary>
-        [DataMember(Name="membership", EmitDefaultValue=false)]
-        public ProgramMembership Membership { get; set; }
+        [DataMember(Name = "firstName", EmitDefaultValue = false)]
+        public string FirstName { get; set; }
+
+        /// <summary>
+        /// Gets or Sets Membership
+        /// </summary>
+        [DataMember(Name = "lastName", EmitDefaultValue = false)]
+        public string LastName { get; set; }
 
         /// <summary>
         /// Gets or Sets Reason
         /// </summary>
-        [DataMember(Name="reason", EmitDefaultValue=false)]
-        public Reason Reason { get; set; }
+        [DataMember(Name = "reasons", EmitDefaultValue = false)]
+        public List<Reason> Reason { get; set; }
 
         /// <summary>
         /// Status of the operation performed on the record
         /// </summary>
         /// <value>Status of the operation performed on the record</value>
-        [DataMember(Name="status", EmitDefaultValue=false)]
+        [DataMember(Name = "status", EmitDefaultValue = false)]
         public string Status { get; set; }
 
         /// <summary>
@@ -63,9 +73,9 @@ namespace SFA.DAS.Experiments.Models.Marketo
             var sb = new StringBuilder();
             sb.Append("class Lead {\n");
             sb.Append("  Id: ").Append(Id).Append("\n");
-            sb.Append("  Membership: ").Append(Membership).Append("\n");
-            sb.Append("  Reason: ").Append(Reason).Append("\n");
-            sb.Append("  Status: ").Append(Status).Append("\n");
+            sb.Append("  Email: ").Append(Email).Append("\n");
+            sb.Append("  FirstName: ").Append(FirstName).Append("\n");
+            sb.Append("  LastName: ").Append(LastName).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -105,19 +115,19 @@ namespace SFA.DAS.Experiments.Models.Marketo
                     this.Id.Equals(input.Id)
                 ) && 
                 (
-                    this.Membership == input.Membership ||
-                    (this.Membership != null &&
-                    this.Membership.Equals(input.Membership))
+                    this.FirstName == input.FirstName ||
+                    (this.FirstName != null &&
+                    this.FirstName.Equals(input.FirstName))
                 ) && 
                 (
-                    this.Reason == input.Reason ||
-                    (this.Reason != null &&
-                    this.Reason.Equals(input.Reason))
+                    this.LastName == input.LastName ||
+                    (this.LastName != null &&
+                    this.LastName.Equals(input.LastName))
                 ) && 
                 (
-                    this.Status == input.Status ||
-                    (this.Status != null &&
-                    this.Status.Equals(input.Status))
+                    this.Email == input.Email ||
+                    (this.Email != null &&
+                    this.Email.Equals(input.Email))
                 );
         }
 
@@ -131,12 +141,12 @@ namespace SFA.DAS.Experiments.Models.Marketo
             {
                 int hashCode = 41;
                 hashCode = hashCode * 59 + this.Id.GetHashCode();
-                if (this.Membership != null)
-                    hashCode = hashCode * 59 + this.Membership.GetHashCode();
-                if (this.Reason != null)
-                    hashCode = hashCode * 59 + this.Reason.GetHashCode();
-                if (this.Status != null)
-                    hashCode = hashCode * 59 + this.Status.GetHashCode();
+                if (this.FirstName != null)
+                    hashCode = hashCode * 59 + this.FirstName.GetHashCode();
+                if (this.LastName != null)
+                    hashCode = hashCode * 59 + this.LastName.GetHashCode();
+                if (this.Email != null)
+                    hashCode = hashCode * 59 + this.Email.GetHashCode();
                 return hashCode;
             }
         }

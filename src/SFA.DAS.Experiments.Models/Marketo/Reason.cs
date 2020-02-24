@@ -69,7 +69,6 @@ namespace SFA.DAS.Experiments.Models.Marketo
         public override string ToString()
         {
             var sb = new StringBuilder();
-            sb.Append("class Reason {\n");
             sb.Append("  Code: ").Append(Code).Append("\n");
             sb.Append("  Message: ").Append(Message).Append("\n");
             sb.Append("}\n");

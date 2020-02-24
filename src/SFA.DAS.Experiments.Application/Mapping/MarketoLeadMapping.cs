@@ -22,6 +22,30 @@ namespace SFA.DAS.Experiments.Application.Mapping.Interfaces
                 newLead.VacancyId = data.VacancyId;
             }
 
+            if (data.MarketoId != null)
+            {
+                newLead.Id = data.MarketoId.Value;
+            }
+
+            return newLead;
+        }
+
+        public Lead MapLead(EventData data)
+        {
+            var newLead = new Lead();
+
+            if (data != null)
+            {
+                newLead.FirstName = data.CandidateFirstName;
+                newLead.LastName = data.CandidateSurname;
+                newLead.Email = data.CandidateEmailAddress;
+            }
+
+            if (data.MarketoId != null)
+            {
+                newLead.Id = data.MarketoId.Value;
+            }
+
             return newLead;
         }
     }

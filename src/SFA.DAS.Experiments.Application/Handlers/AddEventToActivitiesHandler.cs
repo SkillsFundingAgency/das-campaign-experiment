@@ -16,7 +16,6 @@ using SFA.DAS.Experiments.Application.Queries;
 using SFA.DAS.Experiments.Application.Services;
 using SFA.DAS.Experiments.Models.Marketo;
 using SFA.DAS.Experiments.Application.Helpers;
-using Attribute = Marketo.Api.Client.Model.Attribute;
 
 namespace SFA.DAS.Experiments.Application.Handlers
 {
@@ -38,7 +37,9 @@ namespace SFA.DAS.Experiments.Application.Handlers
 
        public async Task<Unit> Handle(EventsProcessedNotification notification, CancellationToken cancellationToken)
        {
-           var startedEvents = notification.Events.Where(w => w.EventType == (EventType) notification.EventType && w.Processed == false).ToList().SplitList();
+           var startedEvents = notification.Events.Where(w => w.EventType == (EventType) notification.EventType && w.Processed == false).ToList().SplitList().ToList();
+
+           if (!startedEvents.Any()) return new Unit();
 
            var activityTypeId = notification.ActivityTypeId;
            var apiName = notification.ApiName;
@@ -47,7 +48,8 @@ namespace SFA.DAS.Experiments.Application.Handlers
 
            _eventsService.UpdateAll(successfulUpdates.ToList());
 
-            return new Unit();
+
+           return new Unit();
        }
 
    }

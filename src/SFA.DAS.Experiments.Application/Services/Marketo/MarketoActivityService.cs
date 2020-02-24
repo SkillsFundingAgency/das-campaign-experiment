@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Marketo.Api.Client.Model;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using SFA.DAS.Experiments.Application.Domain.Interfaces;
@@ -12,7 +13,6 @@ using SFA.DAS.Experiments.Application.Helpers;
 using SFA.DAS.Experiments.Application.Infrastructure.Interfaces.Marketo;
 using SFA.DAS.Experiments.Application.Mapping.Interfaces;
 using SFA.DAS.Experiments.Models.Marketo;
-using Attribute = Marketo.Api.Client.Model.Attribute;
 
 namespace SFA.DAS.Experiments.Application.Services.Marketo
 {
@@ -48,12 +48,12 @@ namespace SFA.DAS.Experiments.Application.Services.Marketo
                 }
 
                 successfulUpdates.AddRange(eventList.Where(p =>
-                    response.Result.Where(w => w.Status != null).All(p2 => p.Processed = true)));
+                    response.Result.Where(w => w.Status == "added").All(p2 => p.Processed = true)));
 
-                var unsuccessfulUpdates = response.Result.Where(p => p.Status == null);
+                var unsuccessfulUpdates = response.Result.Where(p => p.Status != "added");
 
                 unsuccessfulUpdates.ToList().ForEach(s =>
-                    _log.LogError($"Unable to add activity for Activity {apiName} and Marketo Lead Id: {s.Id}. Reason: {s.Reason}"));
+                    _log.LogError($"Unable to add activity for Activity {apiName} and Marketo Lead Id: {s.Id}. Reason: {s.Reason.ToString()}"));
             }
 
             return successfulUpdates;
@@ -62,21 +62,21 @@ namespace SFA.DAS.Experiments.Application.Services.Marketo
         private CustomActivity Map(EventData eventData, string apiName, int activityTypeId, string fieldId)
         {
 
-            var attributes = new List<Attribute>();
+            var attributes = new List<MarketoAttribute>();
 
             if (eventData.EventType == EventType.CandidateDetailsChange)
             {
-                attributes.Add(new Attribute()
+                attributes.Add(new MarketoAttribute()
                 {
                     ApiName = "ESFA_candidateFirstName",
                     Value = eventData.CandidateFirstName
                 });
-                attributes.Add(new Attribute()
+                attributes.Add(new MarketoAttribute()
                 {
                     ApiName = "ESFA_candidateSurname",
                     Value = eventData.CandidateSurname
                 });
-                attributes.Add(new Attribute()
+                attributes.Add(new MarketoAttribute()
                 {
                     ApiName = "ESFA_candidateEmailAddress",
                     Value = eventData.CandidateEmailAddress
@@ -86,7 +86,7 @@ namespace SFA.DAS.Experiments.Application.Services.Marketo
             {
                 if (String.IsNullOrWhiteSpace(eventData.CandidateId) == false && fieldId.ToLower() != "candidateid")
                 {
-                    attributes.Add(new Attribute()
+                    attributes.Add(new MarketoAttribute()
                     {
                         ApiName = "ESFA_candidateID",
                         Value = eventData.CandidateId
@@ -95,7 +95,7 @@ namespace SFA.DAS.Experiments.Application.Services.Marketo
 
                 if (String.IsNullOrWhiteSpace(eventData.VacancyReference) == false)
                 {
-                    attributes.Add(new Attribute()
+                    attributes.Add(new MarketoAttribute()
                     {
                         ApiName = "ESFA_vacancyReference",
                         Value = eventData.VacancyReference
@@ -104,7 +104,7 @@ namespace SFA.DAS.Experiments.Application.Services.Marketo
 
                 if (String.IsNullOrWhiteSpace(eventData.VacancyId) == false)
                 {
-                    attributes.Add(new Attribute()
+                    attributes.Add(new MarketoAttribute()
                     {
                         ApiName = "ESFA_vacancyID",
                         Value = eventData.VacancyId
@@ -113,7 +113,7 @@ namespace SFA.DAS.Experiments.Application.Services.Marketo
 
                 if (String.IsNullOrWhiteSpace(eventData.VacancyTitle) == false)
                 {
-                    attributes.Add(new Attribute()
+                    attributes.Add(new MarketoAttribute()
                     {
                         ApiName = "ESFA_vacancyTitle",
                         Value = eventData.VacancyTitle
@@ -122,7 +122,7 @@ namespace SFA.DAS.Experiments.Application.Services.Marketo
 
                 if (eventData.VacancyCloseDate.HasValue)
                 {
-                    attributes.Add(new Attribute()
+                    attributes.Add(new MarketoAttribute()
                     {
                         ApiName = "ESFA_vacancyCloseDate",
                         Value = eventData.VacancyCloseDate.Value.ToString("s", System.Globalization.CultureInfo.InvariantCulture)

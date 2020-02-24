@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using Marketo.Api.Client.Model;
 using Refit;
 using SFA.DAS.Experiments.Models.Marketo;
 
@@ -11,6 +12,10 @@ namespace SFA.DAS.Experiments.Application.Infrastructure.Interfaces.Marketo
         Task<ResponseOfLead> Get(int id);
         [Post("/leads/push.json")]
         Task<ResponseOfPushLeadToMarketo> PushLead(PushLeadToMarketoRequest pushLead);
+
+        [Post("/leads.json")]
+        Task<ResponseOfPushLeadToMarketo> SyncLeads(SyncLeadRequest Lead);
+
         [Post("/leads/{id}/associate.json")]
         Task<ResponseWithoutResult> AssociateLead(int id, [AliasAs("cookie")]string cookieId);
     }

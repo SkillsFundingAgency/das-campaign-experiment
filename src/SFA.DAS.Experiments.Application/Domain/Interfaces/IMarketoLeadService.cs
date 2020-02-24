@@ -9,5 +9,7 @@ namespace SFA.DAS.Experiments.Application.Domain.Interfaces
     public interface IMarketoLeadService
     {
         Task<IEnumerable<NewLead>> PushLeads(IList<EventData> user);
+        Task<IList<Lead>> SyncLeads(IList<EventData> events);
+
     }
 }

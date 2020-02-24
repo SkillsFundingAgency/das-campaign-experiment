@@ -5,9 +5,9 @@ using System.IO;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
+using Marketo.Api.Client.Model;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
-using Attribute = Marketo.Api.Client.Model.Attribute;
 
 namespace SFA.DAS.Experiments.Models.Marketo
 {
@@ -86,7 +86,7 @@ namespace SFA.DAS.Experiments.Models.Marketo
         /// <param name="marketoGUID">Unique id of the activity (128 character string).</param>
         /// <param name="primaryAttributeValue">Value of the primary attribute (required).</param>
         /// <param name="status">Status of the operation performed on the record.</param>
-        public CustomActivity(string activityDate = default(string), int activityTypeId = default(int), string apiName = default(string), List<Attribute> attributes = default(List<Attribute>), List<Error> errors = default(List<Error>), long id = default(long), long leadId = default(long), string marketoGUID = default(string), string primaryAttributeValue = default(string), StatusEnum? status = default(StatusEnum?))
+        public CustomActivity(string activityDate = default(string), int activityTypeId = default(int), string apiName = default(string), List<MarketoAttribute> attributes = default(List<MarketoAttribute>), List<Error> errors = default(List<Error>), long id = default(long), long leadId = default(long), string marketoGUID = default(string), string primaryAttributeValue = default(string), StatusEnum? status = default(StatusEnum?))
         {
             // to ensure "activityDate" is required (not null)
             if (activityDate == null)
@@ -188,7 +188,7 @@ namespace SFA.DAS.Experiments.Models.Marketo
         /// </summary>
         /// <value>List of secondary attributes</value>
         [DataMember(Name="attributes", EmitDefaultValue=false)]
-        public List<Attribute> Attributes { get; set; }
+        public List<MarketoAttribute> Attributes { get; set; }
 
         /// <summary>
         /// Array of errors that occurred if the request was unsuccessful

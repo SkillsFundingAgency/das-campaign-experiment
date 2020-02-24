@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Marketo.Api.Client.Model;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using SFA.DAS.Experiments.Application.Domain.Interfaces;
@@ -31,9 +32,7 @@ namespace SFA.DAS.Experiments.Application.Services.Marketo
 
         public async Task<IEnumerable<NewLead>> PushLeads(IList<EventData> events)
         {
-            var Leads = events.GroupBy(g => new { g.CandidateFirstName, g.CandidateSurname, g.CandidateEmailAddress })
-                .Select(g => _marketoLeadMapping.Map(g.First()))
-                .ToList();
+            var Leads = events.Select(_marketoLeadMapping.Map).ToList();
 
             var splitList = Leads.SplitList().ToList();
 
@@ -59,6 +58,32 @@ namespace SFA.DAS.Experiments.Application.Services.Marketo
             }
 
             return splitList.SelectMany(s => s);
+        }
+
+        public async Task<IList<Lead>> SyncLeads(IList<EventData> events)
+        {
+            var Leads = events.Select(_marketoLeadMapping.MapLead).ToList();
+
+            var splitList = Leads.SplitList().ToList();
+
+            foreach (var leadsList in splitList)
+            {
+                var leadsRequest = new SyncLeadRequest();
+
+                leadsRequest.Action = SyncLeadRequest.ActionEnum.UpdateOnly;
+                leadsRequest.LookupField = "id";
+                leadsRequest.Input = leadsList.ToList();
+
+                var response = await _marketoLeadClient.SyncLeads(leadsRequest);
+
+                if (response.Errors != null)
+                {
+                    _log.LogError("Marketo Api Push lead Errors: \n" + String.Join("\n", response.Errors.Select(s => s.Message)));
+                }
+
+            }
+
+            return splitList.SelectMany(s => s).ToList();
         }
     }
 }

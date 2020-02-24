@@ -28,20 +28,20 @@ namespace Marketo.Api.Client.Model
     /// Name-Value pair
     /// </summary>
     [DataContract]
-    public partial class Attribute :  IEquatable<Attribute>, IValidatableObject
+    public partial class MarketoAttribute :  IEquatable<MarketoAttribute>, IValidatableObject
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="Attribute" /> class.
+        /// Initializes a new instance of the <see cref="MarketoAttribute" /> class.
         /// </summary>
         [JsonConstructorAttribute]
-        public Attribute() { }
+        public MarketoAttribute() { }
         /// <summary>
-        /// Initializes a new instance of the <see cref="Attribute" /> class.
+        /// Initializes a new instance of the <see cref="MarketoAttribute" /> class.
         /// </summary>
         /// <param name="apiName">apiName.</param>
         /// <param name="name">Name of the attribute (required).</param>
         /// <param name="value">Value of the attribute (required).</param>
-        public Attribute(string apiName = default(string), string name = default(string), Object value = default(Object))
+        public MarketoAttribute(string apiName = default(string), string name = default(string), Object value = default(Object))
         {
             // to ensure "name" is required (not null)
             if (name == null)
@@ -117,7 +117,7 @@ namespace Marketo.Api.Client.Model
         /// <returns>Boolean</returns>
         public override bool Equals(object input)
         {
-            return this.Equals(input as Attribute);
+            return this.Equals(input as MarketoAttribute);
         }
 
         /// <summary>
@@ -125,7 +125,7 @@ namespace Marketo.Api.Client.Model
         /// </summary>
         /// <param name="input">Instance of Attribute to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(Attribute input)
+        public bool Equals(MarketoAttribute input)
         {
             if (input == null)
                 return false;
