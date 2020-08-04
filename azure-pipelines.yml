@@ -44,13 +44,21 @@ jobs:
       projects: '**/*.UnitTests.csproj'
       arguments: '--configuration $(buildConfiguration) --no-build'
 
-- task: DotNetCoreCLI@2
-  displayName: 'Publish Function App '
-  inputs:
-    command: publish
-    publishWebProjects: false
-    projects: 'src/SFA.DAS.Experiment.Function/SFA.DAS.Experiment.Function.csproj'
-    arguments: '--configuration $(buildConfiguration) --output $(build.artifactstagingdirectory)/publish --no-restore  --no-build'
+  - task: DotNetCoreCLI@2
+    displayName: 'Publish Function App '
+    inputs:
+      command: publish
+      publishWebProjects: false
+      projects: 'src/SFA.DAS.Experiment.Function/SFA.DAS.Experiment.Function.csproj'
+      arguments: '--configuration $(buildConfiguration) --output $(build.artifactstagingdirectory)/publish --no-restore  --no-build'
+    
+  - task: CopyFiles@2
+    displayName: 'Copy Files to: $(build.artifactstagingdirectory)'
+    inputs:
+      Contents: |
+      azure/**
+      TargetFolder: '$(build.artifactstagingdirectory)/publish'
+      OverWrite: true
 
 - job: 'DACPACBuild'
   pool:
@@ -71,7 +79,6 @@ jobs:
     displayName: 'Copy Files to: $(build.artifactstagingdirectory)'
     inputs:
       Contents: |
-      azure/**
       src/**/*.dacpac
       TargetFolder: '$(build.artifactstagingdirectory)/publish'
       OverWrite: true
