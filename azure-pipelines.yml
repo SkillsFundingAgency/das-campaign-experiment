@@ -71,8 +71,8 @@ jobs:
     displayName: 'Copy Files to: $(build.artifactstagingdirectory)'
     inputs:
       Contents: |
-      azure\**
-      src\**\*.dacpac
+      azure/**
+      src/**/*.dacpac
       TargetFolder: '$(build.artifactstagingdirectory)/publish'
       OverWrite: true
 
