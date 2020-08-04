@@ -17,6 +17,8 @@ jobs:
 - job: 'CodeBuild'
   pool:
     name: 'DAS - Continuous Integration'
+  workspace:
+    clean: all 
   steps:
   - task: gittools.gitversion.gitversion-task.GitVersion@5
     displayName: GitVersion
