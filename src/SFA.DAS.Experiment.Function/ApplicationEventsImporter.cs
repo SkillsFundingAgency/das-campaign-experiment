@@ -18,7 +18,7 @@ namespace SFA.DAS.Experiment.Function
             _mediator = mediator;
         }
 
-        [FunctionName("ApplicationEventsImporter")]
+        [FunctionName("ApplicationEventsImporter"), Disable]
         public async Task Run([TimerTrigger("0 */2 * * * *")]TimerInfo myTimer, ILogger log)
         {
             log.LogInformation($"ApplicationEventsImporter Timer trigger function executed at: {DateTime.Now}");

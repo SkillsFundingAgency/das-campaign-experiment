@@ -1,0 +1,15 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Attach to .NET Functions",
+            "type": "coreclr",
+            "request": "attach",
+            "processId": "${command:azureFunctions.pickProcess}",
+            "env":
+            {
+                "ConfigurationStorageConnectionString":"DefaultEndpointsProtocol=https;AccountName=esfa;AccountKey=jZRuoIB9B1GOyp90QWevC1seuu+//nWl2ckd8pUNYEtQB6EF+HM3x9HSFdBolKtqMScGKP0EIhLCoXLLKUa/Pg==;EndpointSuffix=core.windows.net"
+            }
+        }
+    ]
+}

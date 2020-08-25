@@ -4,6 +4,7 @@
     <AzureFunctionsVersion>v2</AzureFunctionsVersion>
   </PropertyGroup>
   <ItemGroup>
+  <PackageReference Include="contentful.csharp" Version="5.0.0" />
   <PackageReference Include="Microsoft.Azure.Cosmos.Table" Version="1.0.6" />
   <PackageReference Include="Microsoft.Azure.Functions.Extensions" Version="1.0.0" />
 
@@ -27,6 +28,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SFA.DAS.Experiments.Application\SFA.DAS.Experiments.Application.csproj" />
+    <ProjectReference Include="..\SFA.DAS.Experiment.Application.Cms\SFA.DAS.Experiment.Application.Cms.csproj" />
   </ItemGroup>
   <ItemGroup>
     <None Update="host.json">
