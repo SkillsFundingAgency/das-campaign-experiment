@@ -77,7 +77,7 @@ namespace SFA.DAS.Experiment.Application.Cms.UnitTests
         public async Task Then_a_ContentRefreshResult_is_returned()
         {
             var result = await _handler.Handle(new ContentRefreshRequest(), new System.Threading.CancellationToken());
-            result.Should().BeOfType<ContentRefreshResult>();
+            result.Should().BeOfType<ContentRefreshResponse>();
         }
 
         [Test]

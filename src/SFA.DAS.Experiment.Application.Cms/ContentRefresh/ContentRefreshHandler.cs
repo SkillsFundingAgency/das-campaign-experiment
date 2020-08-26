@@ -1,33 +1,32 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Contentful.Core.Models;
 using MediatR;
-using Microsoft.AspNetCore.Html;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using SFA.DAS.Experiment.Application.Cms.ContentTypes;
-using SFA.DAS.Experiment.Application.Cms.Models;
+using SFA.DAS.Experiment.Application.Cms.Mapping;
 using SFA.DAS.Experiment.Application.Cms.Services;
 
 namespace SFA.DAS.Experiment.Application.Cms.ContentRefresh
 {
-    public class ContentRefreshHandler : IRequestHandler<ContentRefreshRequest, ContentRefreshResult>
+    public class ContentRefreshHandler : IRequestHandler<ContentRefreshRequest, ContentRefreshResponse>
     {
         private readonly ILogger<ContentRefreshHandler> _logger;
         private readonly IContentService _contentService;
         private readonly ICacheService _cacheService;
+        private readonly IArticleMapping _articleMapping;
 
-        public ContentRefreshHandler(ILogger<ContentRefreshHandler> logger, IContentService contentService, ICacheService cacheService)
+        public ContentRefreshHandler(ILogger<ContentRefreshHandler> logger, IContentService contentService, ICacheService cacheService, IArticleMapping articleMapping)
         {
             _logger = logger;
             _contentService = contentService;
             _cacheService = cacheService;
+            _articleMapping = articleMapping;
         }
 
-        public async Task<ContentRefreshResult> Handle(ContentRefreshRequest request, CancellationToken cancellationToken)
+        public async Task<ContentRefreshResponse> Handle(ContentRefreshRequest request, CancellationToken cancellationToken)
         {
             try{
                 await RemoveExistingKeys();
@@ -36,7 +35,7 @@ namespace SFA.DAS.Experiment.Application.Cms.ContentRefresh
 
                 foreach (var article in articles)
                 {
-                    var page = await MapArticleToPage(article);
+                    var page = await _articleMapping.MapArticleToPage(article);
                     var pageJson = JsonConvert.SerializeObject(page);
 
                     await _cacheService.Set("article_" + article.Slug, pageJson);
@@ -44,7 +43,7 @@ namespace SFA.DAS.Experiment.Application.Cms.ContentRefresh
                     _logger.LogInformation($"Stored {article.Slug} json");
                 }
 
-                return new ContentRefreshResult
+                return new ContentRefreshResponse
                 {
                     Success = true,
                     ArticlesStored = articles.Select(a => a.Slug).ToList()
@@ -53,72 +52,12 @@ namespace SFA.DAS.Experiment.Application.Cms.ContentRefresh
             catch(Exception ex)
             {
                 _logger.LogError(ex, ex.Message);
-                return new ContentRefreshResult
+                return new ContentRefreshResponse
                 {
                     Success = false,
                     Exception = ex
                 };
-            }
-
-            
-        }
-
-        public async Task<Page<DomainArticle>> MapArticleToPage(Article contentfulArticle)
-        {
-            var htmlRenderer = new HtmlRenderer();
-            var landingPage = await _contentService.GetEntry<LandingPage>(contentfulArticle.LandingPage.Sys.Id);
-
-            var page = new Page<DomainArticle>
-            {
-                Slug = contentfulArticle.Slug,
-                Title = contentfulArticle.Title,
-                HubType = contentfulArticle.HubType,
-                MetaDescription = contentfulArticle.MetaDescription,
-                PageTitle = contentfulArticle.PageTitle,
-                LandingPageSlug = landingPage.Slug,
-                LandingPageTitle = landingPage.Title
-            };
-
-            var article = new DomainArticle
-            {
-                Hub = contentfulArticle.HubType,
-                Slug = contentfulArticle.Slug,
-                Title = contentfulArticle.Title,
-                PageTitle = contentfulArticle.PageTitle,
-                Sections = new List<DomainArticleSection>()
-            };
-
-            foreach (var contentfulInfoPageSection in contentfulArticle.Sections)
-            {
-                await UpdateArticleSectionLookup(contentfulInfoPageSection.Sys.Id, contentfulArticle.Sys.Id);
-                var section = await _contentService.GetEntry<ArticleSection>(contentfulInfoPageSection.Sys.Id);
-
-                var articleSection = new DomainArticleSection();
-                articleSection.Title = section.Title;
-                articleSection.Slug = section.Slug;
-                articleSection.Body = new HtmlString(htmlRenderer.ToHtml(section.Body).Result);
-                article.Sections.Add(articleSection);
-            }
-
-            page.Content = article;
-
-            return page;
-        }
-
-        public async Task UpdateArticleSectionLookup(string articleSectionId, string articleId)
-        {
-            var lookupKey = $"articleSectionLookup_{articleSectionId}";
-
-            ArticleSectionLookup lookup = await _cacheService.KeyExists(lookupKey) 
-                ? JsonConvert.DeserializeObject<ArticleSectionLookup>(await _cacheService.Get(lookupKey)) 
-                : new ArticleSectionLookup{ArticleIds = new List<string>()};
-            
-            if(!lookup.ArticleIds.Contains(articleId))
-            {
-                lookup.ArticleIds.Add(articleId);
-            }
-
-            await _cacheService.Set(lookupKey, JsonConvert.SerializeObject(lookup));
+            }   
         }
 
         public async Task RemoveExistingKeys()
@@ -127,5 +66,4 @@ namespace SFA.DAS.Experiment.Application.Cms.ContentRefresh
             await _cacheService.ClearKeysStartingWith("articleSectionLookup");
         }
     }
-
 }

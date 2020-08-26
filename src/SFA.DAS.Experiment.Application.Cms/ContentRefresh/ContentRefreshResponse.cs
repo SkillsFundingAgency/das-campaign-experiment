@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace SFA.DAS.Experiment.Application.Cms.ContentRefresh
 {
-    public class ContentRefreshResult
+    public class ContentRefreshResponse
     {
         public List<string> ArticlesStored { get; set; }
         public bool Success { get; set; }
