@@ -7,6 +7,7 @@ using NSubstitute;
 using NUnit.Framework;
 using SFA.DAS.Experiment.Application.Cms.ContentRefresh;
 using SFA.DAS.Experiment.Application.Cms.ContentTypes;
+using SFA.DAS.Experiment.Application.Cms.Mapping;
 using SFA.DAS.Experiment.Application.Cms.Services;
 
 namespace SFA.DAS.Experiment.Application.Cms.UnitTests
@@ -54,7 +55,7 @@ namespace SFA.DAS.Experiment.Application.Cms.UnitTests
             _contentService.GetEntry<LandingPage>("abc123").Returns(new LandingPage{Slug = "landing-page", Title = "Landing Page"}); 
 
             _cacheService = Substitute.For<ICacheService>();
-            _handler = new ContentRefreshHandler(_logger, _contentService, _cacheService);
+            _handler = new ContentRefreshHandler(_logger, _contentService, _cacheService, new ArticleMapping(_contentService, _cacheService));
         }
 
         [Test]
