@@ -95,7 +95,7 @@ namespace SFA.DAS.Experiment.Application.Cms.UnitTests
         [Test]
         public async Task And_an_error_occurs_Then_ContentRefreshResult_returns_success_false()
         {
-            _cacheService.Set(Arg.Any<string>(), Arg.Any<string>()).Returns(x => {throw new System.Exception();});
+            _cacheService.Set("article_the-article-slug", Arg.Any<string>()).Returns(x => {throw new System.Exception();});
 
             var result = await _handler.Handle(new ContentRefreshRequest(), new System.Threading.CancellationToken());
 

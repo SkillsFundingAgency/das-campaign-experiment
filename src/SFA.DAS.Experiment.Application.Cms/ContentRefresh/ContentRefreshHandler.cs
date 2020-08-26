@@ -28,7 +28,7 @@ namespace SFA.DAS.Experiment.Application.Cms.ContentRefresh
 
         public async Task<ContentRefreshResponse> Handle(ContentRefreshRequest request, CancellationToken cancellationToken)
         {
-            
+            try{
                 await RemoveExistingKeys();
 
                 var articles = await _contentService.GetEntriesByType<Article>();
@@ -48,16 +48,16 @@ namespace SFA.DAS.Experiment.Application.Cms.ContentRefresh
                     Success = true,
                     ArticlesStored = articles.Select(a => a.Slug).ToList()
                 };
-            // }
-            // catch(Exception ex)
-            // {
-            //     _logger.LogError(ex, ex.Message);
-            //     return new ContentRefreshResponse
-            //     {
-            //         Success = false,
-            //         Exception = ex
-            //     };
-            // }   
+            }
+            catch(Exception ex)
+            {
+                _logger.LogError(ex, ex.Message);
+                return new ContentRefreshResponse
+                {
+                    Success = false,
+                    Exception = ex
+                };
+            }   
         }
 
         public async Task RemoveExistingKeys()
