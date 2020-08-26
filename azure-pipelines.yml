@@ -57,6 +57,11 @@ jobs:
       Contents: azure/**
       TargetFolder: '$(build.artifactstagingdirectory)/publish'
 
+  - task: PublishBuildArtifacts@1
+    displayName: "Publish Artifact"
+    inputs:
+      pathtoPublish: "$(build.artifactstagingdirectory)/publish"
+
 - job: 'DACPACBuild'
   pool:
     name: 'DAS - Continuous Integration'
@@ -67,7 +72,7 @@ jobs:
   - task: VSBuild@1 
     displayName: 'Build DACPAC'
     inputs:
-      solution: 'src\**\*.sqlproj'
+      solution: 'src/SFA.DAS.Experiment.Database/SFA.DAS.Experiment.Database.sqlproj'
       platform: '$(buildPlatform)'
       configuration: '$(buildConfiguration)'
       msbuildArgs: '/p:PackageLocation="$(build.artifactstagingdirectory)/publish"'
