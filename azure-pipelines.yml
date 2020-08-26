@@ -56,7 +56,6 @@ jobs:
     inputs:
       Contents: azure/**
       TargetFolder: '$(build.artifactstagingdirectory)/publish'
-      OverWrite: true
 
 - job: 'DACPACBuild'
   pool:
@@ -77,8 +76,7 @@ jobs:
     displayName: 'Copy Files to: $(build.artifactstagingdirectory)'
     inputs:
       Contents: src/**/*.dacpac
-      TargetFolder: '$(build.artifactstagingdirectory)/publish'
-      OverWrite: true
+      TargetFolder: '$(build.artifactstagingdirectory)/publish'      
 
   - task: PublishBuildArtifacts@1
     displayName: 'Publish Artifact'
