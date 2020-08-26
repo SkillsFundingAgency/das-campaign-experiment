@@ -16,6 +16,7 @@ using SFA.DAS.Campaign.Functions.Application.Infrastructure.Interfaces.Marketo;
 using SFA.DAS.Configuration.AzureTableStorage;
 using SFA.DAS.Experiment.Application.Cms;
 using SFA.DAS.Experiment.Application.Cms.ContentRefresh;
+using SFA.DAS.Experiment.Application.Cms.Mapping;
 using SFA.DAS.Experiment.Application.Cms.Services;
 using SFA.DAS.Experiment.Function.Infrastructure;
 using SFA.DAS.Experiments.Application.Domain.Interfaces;
@@ -96,7 +97,11 @@ namespace SFA.DAS.Experiment.Function
             builder.Services.AddTransient<IMarketoActivityService, MarketoActivityService>();
             
             builder.Services.Configure<ContentfulOptions>(config.GetSection("ContentfulOptions"));
-            builder.Services.AddTransient<ConnectionMultiplexer>(client => {return ConnectionMultiplexer.Connect($"{config.GetSection("ConnectionStrings").GetValue<String>("SharedRedis")},DefaultDatabase=3,allowAdmin=true");});
+            builder.Services.AddTransient<ConnectionMultiplexer>(services => 
+            {
+                var connectionStrings = services.GetService<IOptions<ConnectionStrings>>().Value;
+                return ConnectionMultiplexer.Connect($"{connectionStrings.RedisConnectionString},{connectionStrings.ContentCacheDatabase},allowAdmin=true");
+            });
             builder.Services.AddTransient<IDatabase>(client =>
             {
                 return client.GetService<ConnectionMultiplexer>().GetDatabase();
@@ -107,6 +112,7 @@ namespace SFA.DAS.Experiment.Function
             });
             builder.Services.AddTransient<IContentService, ContentService>();
             builder.Services.AddTransient<ICacheService, CacheService>();
+            builder.Services.AddTransient<IArticleMapping, ArticleMapping>();
         }
     }
 }
