@@ -52,6 +52,7 @@ namespace SFA.DAS.Experiment.Application.Cms.ContentRefresh
             }
             catch(Exception ex)
             {
+                _logger.LogError(ex, ex.Message);
                 return new ContentRefreshResult
                 {
                     Success = false,

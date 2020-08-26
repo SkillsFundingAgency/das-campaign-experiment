@@ -33,12 +33,11 @@ namespace SFA.DAS.Experiment.Function
 
             var objectResult = new ObjectResult(refreshResult)
             {
-                StatusCode = StatusCodes.Status200OK,
+                StatusCode = refreshResult.Success ?  StatusCodes.Status200OK : StatusCodes.Status500InternalServerError,
                 ContentTypes = new Microsoft.AspNetCore.Mvc.Formatters.MediaTypeCollection() 
             };
             objectResult.ContentTypes.Add("application/json");
             return objectResult;
-            //return objectResult  OkResultOn();
         }
     }
 }
