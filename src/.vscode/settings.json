@@ -1,8 +1,0 @@
-{
-    "azureFunctions.deploySubpath": "SFA.DAS.Experiment.Function/bin/Release/netcoreapp2.2/publish",
-    "azureFunctions.projectLanguage": "C#",
-    "azureFunctions.projectRuntime": "~2",
-    "debug.internalConsoleOptions": "neverOpen",
-    "azureFunctions.preDeployTask": "publish",
-    "dotnet-test-explorer.testProjectPath": "**/*Tests.@(csproj|vbproj|fsproj)"
-}
