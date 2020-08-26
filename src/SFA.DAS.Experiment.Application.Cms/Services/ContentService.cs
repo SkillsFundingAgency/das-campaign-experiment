@@ -1,7 +1,9 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Contentful.Core;
+using Contentful.Core.Errors;
 using Contentful.Core.Search;
 using SFA.DAS.Experiment.Application.Cms.ContentTypes;
 
@@ -24,7 +26,16 @@ namespace SFA.DAS.Experiment.Application.Cms.Services
 
         public async Task<T> GetEntry<T>(string id)
         {
-             return await _contentfulClient.GetEntry<T>(id);
+            try {
+                return await _contentfulClient.GetEntry<T>(id);
+            }
+            catch(ContentfulException ex){
+                if (ex.StatusCode == 404)
+                {
+                    return default(T);
+                }
+                throw ex;
+            }
         }
     }
 

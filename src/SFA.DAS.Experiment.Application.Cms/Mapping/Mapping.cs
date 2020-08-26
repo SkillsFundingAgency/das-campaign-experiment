@@ -54,12 +54,14 @@ namespace SFA.DAS.Experiment.Application.Cms.Mapping
             {
                 await UpdateArticleSectionLookup(section.Sys.Id, article.Sys.Id);
                 var contentSection = await _contentService.GetEntry<ArticleSection>(section.Sys.Id);
-
-                var articleSection = new DomainArticleSection();
-                articleSection.Title = contentSection.Title;
-                articleSection.Slug = contentSection.Slug;
-                articleSection.Body = new HtmlString(htmlRenderer.ToHtml(contentSection.Body).Result);
-                domainArticle.Sections.Add(articleSection);
+                if(contentSection != null)
+                {
+                    var articleSection = new DomainArticleSection();
+                    articleSection.Title = contentSection.Title;
+                    articleSection.Slug = contentSection.Slug;
+                    articleSection.Body = new HtmlString(htmlRenderer.ToHtml(contentSection.Body).Result);
+                    domainArticle.Sections.Add(articleSection);
+                }
             }
 
             page.Content = domainArticle;
