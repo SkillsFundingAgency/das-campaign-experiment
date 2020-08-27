@@ -35,7 +35,7 @@ namespace SFA.DAS.Experiment.Application.Cms.UnitTests
                     Title = "", 
                     MetaDescription = "", 
                     PageTitle = "", 
-                    HubType = "", 
+                    HubType = "Apprentices", 
                     LandingPage = new LandingPage(){Sys = new Contentful.Core.Models.SystemProperties(){Id = "abc123"}}, 
                     Sections = new List<ArticleSection>()
                 },
@@ -46,7 +46,7 @@ namespace SFA.DAS.Experiment.Application.Cms.UnitTests
                     Title = "", 
                     MetaDescription = "", 
                     PageTitle = "", 
-                    HubType = "", 
+                    HubType = "Apprentices", 
                     LandingPage = new LandingPage(){Sys = new Contentful.Core.Models.SystemProperties(){Id = "abc123"}}, 
                     Sections = new List<ArticleSection>()
                 }
