@@ -6,9 +6,14 @@ namespace SFA.DAS.Experiment.Application.Cms.Models
         public string Title { get; set; }
         public string PageTitle { get; set; }
         public string MetaDescription { get; set; }
-        public string HubType { get; set; }
-        public string LandingPageSlug { get; set; }
-        public string LandingPageTitle { get; set; }
+        public HubType HubType { get; set; }
         public T Content { get; set; }
+    }
+
+    public enum HubType
+    {
+        Home = 0,
+        Employers = 1,
+        Apprentices = 2
     }
 }

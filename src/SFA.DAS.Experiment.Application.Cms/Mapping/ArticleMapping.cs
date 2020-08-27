@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Contentful.Core.Models;
@@ -9,11 +10,6 @@ using SFA.DAS.Experiment.Application.Cms.Services;
 
 namespace SFA.DAS.Experiment.Application.Cms.Mapping
 {
-    public interface IArticleMapping
-    {
-        Task<Page<DomainArticle>> MapArticleToPage(Article article);
-    }
-
     public class ArticleMapping : IArticleMapping
     {
         private readonly IContentService _contentService;
@@ -34,19 +30,15 @@ namespace SFA.DAS.Experiment.Application.Cms.Mapping
             {
                 Slug = article.Slug,
                 Title = article.Title,
-                HubType = article.HubType,
+                HubType = (HubType)Enum.Parse(typeof(HubType), article.HubType),
                 MetaDescription = article.MetaDescription,
-                PageTitle = article.PageTitle,
-                LandingPageSlug = landingPage.Slug,
-                LandingPageTitle = landingPage.Title
+                PageTitle = article.PageTitle
             };
 
             var domainArticle = new DomainArticle
             {
-                Hub = article.HubType,
-                Slug = article.Slug,
-                Title = article.Title,
-                PageTitle = article.PageTitle,
+                LandingPageSlug = landingPage.Slug,
+                LandingPageTitle = landingPage.Title,
                 Sections = new List<DomainArticleSection>()
             };
 
