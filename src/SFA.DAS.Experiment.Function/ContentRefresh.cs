@@ -22,13 +22,6 @@ namespace SFA.DAS.Experiment.Function
         [FunctionName("ContentRefresher")]
         public async Task<IActionResult> Run([HttpTrigger(AuthorizationLevel.Function, "post", Route = null)]HttpRequest request, ILogger log)
         {
-            // if(!request.Headers.ContainsKey("contentfulWebhookSecret") 
-            // || request.Headers["contentfulWebhookSecret"][0] != _contentfulOptions.WebhookSecret)
-            // {
-            //     log.LogInformation("Call to ContentRefresher without the correct contentfulWebhookSecret. Returning 401 Unauthorized."); 
-            //     return new UnauthorizedResult();
-            // }
-
             var refreshResult = await _mediator.Send(new ContentRefreshRequest());
 
             var objectResult = new ObjectResult(refreshResult)
