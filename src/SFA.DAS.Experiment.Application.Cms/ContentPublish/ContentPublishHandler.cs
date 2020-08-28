@@ -64,7 +64,7 @@ namespace SFA.DAS.Experiment.Application.Cms.ContentPublish
         {           
             var articleEntry = await _contentService.GetEntry<Article>(entryId);
 
-            var page = _articleMapping.MapArticleToPage(articleEntry);
+            var page = await _articleMapping.MapArticleToPage(articleEntry);
             var pageJson = JsonConvert.SerializeObject(page);
 
             await _cacheService.Set("article_" + articleEntry.Slug, pageJson);
