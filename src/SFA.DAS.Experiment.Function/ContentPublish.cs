@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using SFA.DAS.Experiment.Application.Cms;
 using SFA.DAS.Experiment.Application.Cms.ContentPublish;
@@ -17,10 +18,10 @@ namespace SFA.DAS.Experiment.Function
         private readonly IMediator _mediator;
         private readonly ContentfulOptions _contentfulOptions;
 
-        public ContentPublish(IMediator mediator, ContentfulOptions contentfulOptions)
+        public ContentPublish(IMediator mediator, IOptions<ContentfulOptions> contentfulOptions)
         {
             _mediator = mediator;
-            _contentfulOptions = contentfulOptions;
+            _contentfulOptions = contentfulOptions.Value;
         }
 
         [FunctionName("ContentPublish")]
