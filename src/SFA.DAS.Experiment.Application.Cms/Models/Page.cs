@@ -1,3 +1,6 @@
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+
 namespace SFA.DAS.Experiment.Application.Cms.Models
 {
     public class Page<T>
@@ -12,8 +15,8 @@ namespace SFA.DAS.Experiment.Application.Cms.Models
 
     public enum HubType
     {
-        Home = 0,
-        Employers = 1,
-        Apprentices = 2
+        Home,
+        Employers,
+        Apprentices
     }
 }
