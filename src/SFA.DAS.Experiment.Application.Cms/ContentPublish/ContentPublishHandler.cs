@@ -12,14 +12,14 @@ using SFA.DAS.Experiment.Application.Cms.Services;
 
 namespace SFA.DAS.Experiment.Application.Cms.ContentPublish
 {
-    public class ContentRemoveHandler : IRequestHandler<ContentPublishRequest, ContentPublishResponse>
+    public class ContentPublishHandler : IRequestHandler<ContentPublishRequest, ContentPublishResponse>
     {
         private readonly ICacheService _cacheService;
         private readonly IContentService _contentService;
-        private readonly ILogger<ContentRemoveHandler> _logger;
+        private readonly ILogger<ContentPublishHandler> _logger;
         private readonly IArticleMapping _articleMapping;
 
-        public ContentRemoveHandler(ICacheService cacheService, IContentService contentService, ILogger<ContentRemoveHandler> logger, IArticleMapping articleMapping)
+        public ContentPublishHandler(ICacheService cacheService, IContentService contentService, ILogger<ContentPublishHandler> logger, IArticleMapping articleMapping)
         {
             _cacheService = cacheService;
             _contentService = contentService;
