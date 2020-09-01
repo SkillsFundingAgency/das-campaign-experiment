@@ -14,17 +14,17 @@ namespace SFA.DAS.Experiment.Application.Cms.UnitTests
 {
     public class When_ContentRefresh_is_called
     {
-        private ILogger<ContentRemoveHandler> _logger;
+        private ILogger<ContentRefreshHandler> _logger;
         private IContentService _contentService;
 
         private ICacheService _cacheService;
 
-        private ContentRemoveHandler _handler;
+        private ContentRefreshHandler _handler;
 
         [SetUp]
         public void Setup()
         {
-            _logger = Substitute.For<ILogger<ContentRemoveHandler>>();
+            _logger = Substitute.For<ILogger<ContentRefreshHandler>>();
             _contentService = Substitute.For<IContentService>();
 
             _contentService.GetEntriesByType<Article>().Returns(new List<Article>(){
@@ -55,7 +55,7 @@ namespace SFA.DAS.Experiment.Application.Cms.UnitTests
             _contentService.GetEntry<LandingPage>("abc123").Returns(new LandingPage{Slug = "landing-page", Title = "Landing Page"}); 
 
             _cacheService = Substitute.For<ICacheService>();
-            _handler = new ContentRemoveHandler(_logger, _contentService, _cacheService, new ArticleMapping(_contentService, _cacheService));
+            _handler = new ContentRefreshHandler(_logger, _contentService, _cacheService, new ArticleMapping(_contentService, _cacheService));
         }
 
         [Test]
