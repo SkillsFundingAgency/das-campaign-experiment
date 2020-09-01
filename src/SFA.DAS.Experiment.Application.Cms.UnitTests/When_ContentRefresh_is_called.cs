@@ -14,23 +14,23 @@ namespace SFA.DAS.Experiment.Application.Cms.UnitTests
 {
     public class When_ContentRefresh_is_called
     {
-        private ILogger<ContentRefreshHandler> _logger;
+        private ILogger<ContentRemoveHandler> _logger;
         private IContentService _contentService;
 
         private ICacheService _cacheService;
 
-        private ContentRefreshHandler _handler;
+        private ContentRemoveHandler _handler;
 
         [SetUp]
         public void Setup()
         {
-            _logger = Substitute.For<ILogger<ContentRefreshHandler>>();
+            _logger = Substitute.For<ILogger<ContentRemoveHandler>>();
             _contentService = Substitute.For<IContentService>();
 
             _contentService.GetEntriesByType<Article>().Returns(new List<Article>(){
                 new Article
                 {
-                    Sys = new Contentful.Core.Models.SystemProperties(), 
+                    Sys = new Contentful.Core.Models.SystemProperties(){Id = "article1"}, 
                     Slug = "the-article-slug", 
                     Title = "", 
                     MetaDescription = "", 
@@ -41,7 +41,7 @@ namespace SFA.DAS.Experiment.Application.Cms.UnitTests
                 },
                 new Article
                 {
-                    Sys = new Contentful.Core.Models.SystemProperties(), 
+                    Sys = new Contentful.Core.Models.SystemProperties(){Id = "article2"}, 
                     Slug = "another-article-slug", 
                     Title = "", 
                     MetaDescription = "", 
@@ -55,7 +55,7 @@ namespace SFA.DAS.Experiment.Application.Cms.UnitTests
             _contentService.GetEntry<LandingPage>("abc123").Returns(new LandingPage{Slug = "landing-page", Title = "Landing Page"}); 
 
             _cacheService = Substitute.For<ICacheService>();
-            _handler = new ContentRefreshHandler(_logger, _contentService, _cacheService, new ArticleMapping(_contentService, _cacheService));
+            _handler = new ContentRemoveHandler(_logger, _contentService, _cacheService, new ArticleMapping(_contentService, _cacheService));
         }
 
         [Test]
@@ -101,6 +101,15 @@ namespace SFA.DAS.Experiment.Application.Cms.UnitTests
 
             result.Success.Should().BeFalse();
             result.Exception.Should().BeOfType<System.Exception>(); 
+        }
+
+        [Test]
+        public async Task Then_an_id_to_slug_reference_is_stored_for_each_article()
+        {
+            await _handler.Handle(new ContentRefreshRequest(), new System.Threading.CancellationToken());
+
+            await _cacheService.Received().Set("articleIdSlugLookup_article1", "the-article-slug");
+            await _cacheService.Received().Set("articleIdSlugLookup_article2", "another-article-slug");
         }
     }
 }

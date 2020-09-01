@@ -12,14 +12,14 @@ using SFA.DAS.Experiment.Application.Cms.Services;
 
 namespace SFA.DAS.Experiment.Application.Cms.ContentPublish
 {
-    public class ContentPublishHandler : IRequestHandler<ContentPublishRequest, ContentPublishResponse>
+    public class ContentRemoveHandler : IRequestHandler<ContentPublishRequest, ContentPublishResponse>
     {
         private readonly ICacheService _cacheService;
         private readonly IContentService _contentService;
-        private readonly ILogger<ContentPublishHandler> _logger;
+        private readonly ILogger<ContentRemoveHandler> _logger;
         private readonly IArticleMapping _articleMapping;
 
-        public ContentPublishHandler(ICacheService cacheService, IContentService contentService, ILogger<ContentPublishHandler> logger, IArticleMapping articleMapping)
+        public ContentRemoveHandler(ICacheService cacheService, IContentService contentService, ILogger<ContentRemoveHandler> logger, IArticleMapping articleMapping)
         {
             _cacheService = cacheService;
             _contentService = contentService;
@@ -68,6 +68,7 @@ namespace SFA.DAS.Experiment.Application.Cms.ContentPublish
             var pageJson = JsonConvert.SerializeObject(page);
 
             await _cacheService.Set("article_" + articleEntry.Slug, pageJson);
+            await _cacheService.Set("articleIdSlugLookup_" + articleEntry.Sys.Id, articleEntry.Slug);
 
             _logger.LogInformation($"Stored {articleEntry.Slug + " json"}");
 

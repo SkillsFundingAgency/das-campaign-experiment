@@ -89,7 +89,7 @@ namespace SFA.DAS.Experiment.Function
                 .ConfigureHttpClient(c => c.BaseAddress = new Uri(marketoConfig.ApiBaseUrl)).AddHttpMessageHandler<OAuthHttpClientHandler>();
 
 
-            builder.Services.AddMediatR(typeof(ProcessEventsCommand), typeof(ContentRefreshHandler));
+            builder.Services.AddMediatR(typeof(ProcessEventsCommand), typeof(ContentRemoveHandler));
 
             builder.Services.AddTransient<IMarketoLeadService, MarketoLeadService>();
             builder.Services.AddTransient<IMarketoLeadMapping, MarketoLeadMapping>();

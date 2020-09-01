@@ -10,6 +10,7 @@ namespace SFA.DAS.Experiment.Application.Cms.Services
         Task Set(string key, string value);
 
         Task<bool> KeyExists(string key);
+        Task Delete(string key);
     }
 
     public class CacheService : ICacheService
@@ -32,6 +33,11 @@ namespace SFA.DAS.Experiment.Application.Cms.Services
             {
                 await _redisDatabase.KeyDeleteAsync(key);
             }
+        }
+    
+        public async Task Delete(string key)
+        {
+            await _redisDatabase.KeyDeleteAsync(key);
         }
 
         public async Task<string> Get(string key)
