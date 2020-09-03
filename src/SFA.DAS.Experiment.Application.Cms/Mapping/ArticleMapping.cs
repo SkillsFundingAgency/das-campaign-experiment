@@ -39,7 +39,8 @@ namespace SFA.DAS.Experiment.Application.Cms.Mapping
             {
                 LandingPageSlug = landingPage.Slug,
                 LandingPageTitle = landingPage.Title,
-                Sections = new List<DomainArticleSection>()
+                Sections = new List<DomainArticleSection>(),
+                Summary = article.Summary
             };
 
             foreach (var section in article.Sections)

@@ -7,5 +7,6 @@ namespace SFA.DAS.Experiment.Application.Cms.Models
         public string LandingPageSlug { get; set; }
         public string LandingPageTitle { get; set; }
         public List<DomainArticleSection> Sections { get; set; }
+        public string Summary { get; set; }
     }
 }
