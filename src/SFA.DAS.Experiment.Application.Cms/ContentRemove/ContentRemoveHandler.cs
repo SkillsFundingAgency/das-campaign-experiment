@@ -4,7 +4,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 using Microsoft.Extensions.Logging;
-using SFA.DAS.Experiment.Application.Cms.Mapping;
 using SFA.DAS.Experiment.Application.Cms.Services;
 
 namespace SFA.DAS.Experiment.Application.Cms.ContentRemove
@@ -12,16 +11,12 @@ namespace SFA.DAS.Experiment.Application.Cms.ContentRemove
     public class ContentRemoveHandler : IRequestHandler<ContentRemoveRequest, ContentRemoveResponse>
     {
         private readonly ICacheService _cacheService;
-        private readonly IContentService _contentService;
         private readonly ILogger<ContentRemoveHandler> _logger;
-        private readonly IArticleMapping _articleMapping;
 
-        public ContentRemoveHandler(ICacheService cacheService, IContentService contentService, ILogger<ContentRemoveHandler> logger, IArticleMapping articleMapping)
+        public ContentRemoveHandler(ICacheService cacheService, ILogger<ContentRemoveHandler> logger)
         {
             _cacheService = cacheService;
-            _contentService = contentService;
             _logger = logger;
-            _articleMapping = articleMapping;
         }
 
         public async Task<ContentRemoveResponse> Handle(ContentRemoveRequest request, CancellationToken cancellationToken)
