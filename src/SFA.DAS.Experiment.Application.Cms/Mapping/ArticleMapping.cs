@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Contentful.Core.Models;
 using Microsoft.AspNetCore.Html;
 using Newtonsoft.Json;
+using SFA.DAS.Campaign.Content;
 using SFA.DAS.Experiment.Application.Cms.ContentTypes;
 using SFA.DAS.Experiment.Application.Cms.Models;
 using SFA.DAS.Experiment.Application.Cms.Services;
