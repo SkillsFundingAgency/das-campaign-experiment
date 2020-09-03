@@ -15,7 +15,7 @@ using SFA.DAS.Assessor.Functions.Infrastructure;
 using SFA.DAS.Campaign.Functions.Application.Infrastructure.Interfaces.Marketo;
 using SFA.DAS.Configuration.AzureTableStorage;
 using SFA.DAS.Experiment.Application.Cms;
-using SFA.DAS.Experiment.Application.Cms.ContentRefresh;
+using SFA.DAS.Experiment.Application.Cms.ContentPublish;
 using SFA.DAS.Experiment.Application.Cms.Mapping;
 using SFA.DAS.Experiment.Application.Cms.Services;
 using SFA.DAS.Experiment.Function.Infrastructure;
@@ -89,7 +89,7 @@ namespace SFA.DAS.Experiment.Function
                 .ConfigureHttpClient(c => c.BaseAddress = new Uri(marketoConfig.ApiBaseUrl)).AddHttpMessageHandler<OAuthHttpClientHandler>();
 
 
-            builder.Services.AddMediatR(typeof(ProcessEventsCommand), typeof(ContentRefreshHandler));
+            builder.Services.AddMediatR(typeof(ProcessEventsCommand), typeof(ContentPublishHandler));
 
             builder.Services.AddTransient<IMarketoLeadService, MarketoLeadService>();
             builder.Services.AddTransient<IMarketoLeadMapping, MarketoLeadMapping>();

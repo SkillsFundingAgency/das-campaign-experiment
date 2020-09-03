@@ -30,7 +30,7 @@ namespace SFA.DAS.Experiment.Application.Cms.UnitTests
             _contentService.GetEntriesByType<Article>().Returns(new List<Article>(){
                 new Article
                 {
-                    Sys = new Contentful.Core.Models.SystemProperties(), 
+                    Sys = new Contentful.Core.Models.SystemProperties(){Id = "article1"}, 
                     Slug = "the-article-slug", 
                     Title = "", 
                     MetaDescription = "", 
@@ -41,7 +41,7 @@ namespace SFA.DAS.Experiment.Application.Cms.UnitTests
                 },
                 new Article
                 {
-                    Sys = new Contentful.Core.Models.SystemProperties(), 
+                    Sys = new Contentful.Core.Models.SystemProperties(){Id = "article2"}, 
                     Slug = "another-article-slug", 
                     Title = "", 
                     MetaDescription = "", 
@@ -101,6 +101,15 @@ namespace SFA.DAS.Experiment.Application.Cms.UnitTests
 
             result.Success.Should().BeFalse();
             result.Exception.Should().BeOfType<System.Exception>(); 
+        }
+
+        [Test]
+        public async Task Then_an_id_to_slug_reference_is_stored_for_each_article()
+        {
+            await _handler.Handle(new ContentRefreshRequest(), new System.Threading.CancellationToken());
+
+            await _cacheService.Received().Set("articleIdSlugLookup_article1", "the-article-slug");
+            await _cacheService.Received().Set("articleIdSlugLookup_article2", "another-article-slug");
         }
     }
 }

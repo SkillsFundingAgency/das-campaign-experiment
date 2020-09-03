@@ -68,6 +68,7 @@ namespace SFA.DAS.Experiment.Application.Cms.ContentPublish
             var pageJson = JsonConvert.SerializeObject(page);
 
             await _cacheService.Set("article_" + articleEntry.Slug, pageJson);
+            await _cacheService.Set("articleIdSlugLookup_" + articleEntry.Sys.Id, articleEntry.Slug);
 
             _logger.LogInformation($"Stored {articleEntry.Slug + " json"}");
 

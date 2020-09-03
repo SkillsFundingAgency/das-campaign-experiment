@@ -39,6 +39,7 @@ namespace SFA.DAS.Experiment.Application.Cms.ContentRefresh
                     var pageJson = JsonConvert.SerializeObject(page);
 
                     await _cacheService.Set("article_" + article.Slug, pageJson);
+                    await _cacheService.Set("articleIdSlugLookup_" + article.Sys.Id, article.Slug);
 
                     _logger.LogInformation($"Stored {article.Slug} json");
                 }
@@ -64,6 +65,7 @@ namespace SFA.DAS.Experiment.Application.Cms.ContentRefresh
         {
             await _cacheService.ClearKeysStartingWith("article");
             await _cacheService.ClearKeysStartingWith("articleSectionLookup");
+            await _cacheService.ClearKeysStartingWith("articleIdSlugLookup");
         }
     }
 }
