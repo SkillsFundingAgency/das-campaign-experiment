@@ -26,7 +26,8 @@ namespace SFA.DAS.Experiment.Application.Cms.Services
 
         public async Task ClearKeysStartingWith(string prefix)
         {
-            var endpoint = _redisConnection.GetEndPoints()[0];
+            System.Net.EndPoint[] endPoints = _redisConnection.GetEndPoints();
+            var endpoint = endPoints[0];
             var server = _redisConnection.GetServer(endpoint);
 
             foreach (var key in server.Keys(pattern: $"{prefix}_*"))
