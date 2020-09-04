@@ -59,6 +59,16 @@ namespace SFA.DAS.Experiment.Application.Cms.Mapping
 
             page.Content = domainArticle;
 
+            var articleCard = new ArticleCard();
+            articleCard.HubType = page.HubType;
+            articleCard.LandingPageSlug = domainArticle.LandingPageSlug;
+            articleCard.LandingPageTitle = domainArticle.LandingPageTitle;
+            articleCard.Summary = domainArticle.Summary;
+            articleCard.Title = page.Title;
+            articleCard.Slug = page.Slug;
+
+            await _cacheService.Set($"articleCard_{article.Slug}", JsonConvert.SerializeObject(articleCard));
+
             return page;
         }
 

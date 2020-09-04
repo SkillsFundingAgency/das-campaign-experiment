@@ -53,6 +53,7 @@ namespace SFA.DAS.Experiment.Application.Cms.ContentRemove
         {           
             var articleSlug = await _cacheService.Get("articleIdSlugLookup_" + entryId);
             await _cacheService.Delete("article_" + articleSlug);
+            await _cacheService.Delete("articleCard_" + articleSlug);
             await _cacheService.Delete("articleIdSlugLookup_" + entryId);
 
             return articleSlug;

@@ -66,6 +66,7 @@ namespace SFA.DAS.Experiment.Application.Cms.ContentRefresh
             await _cacheService.ClearKeysStartingWith("article");
             await _cacheService.ClearKeysStartingWith("articleSectionLookup");
             await _cacheService.ClearKeysStartingWith("articleIdSlugLookup");
+            await _cacheService.ClearKeysStartingWith("articleCard");
         }
     }
 }
