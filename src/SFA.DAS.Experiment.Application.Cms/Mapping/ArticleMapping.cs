@@ -1,8 +1,11 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Html;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using SFA.DAS.Campaign.Content;
 using SFA.DAS.Experiment.Application.Cms.ContentTypes;
 using SFA.DAS.Experiment.Application.Cms.Models;
@@ -47,13 +50,33 @@ namespace SFA.DAS.Experiment.Application.Cms.Mapping
             {
                 await UpdateArticleSectionLookup(section.Sys.Id, article.Sys.Id);
                 var contentSection = await _contentService.GetEntry<ArticleSection>(section.Sys.Id);
-                if(contentSection != null)
+                var articleSectionType = section.Sys.ContentType.SystemProperties.Id;
+
+                if(articleSectionType == "articleTable")
                 {
-                    var articleSection = new DomainArticleSection();
-                    articleSection.Title = contentSection.Title;
-                    articleSection.Slug = contentSection.Slug;
-                    articleSection.Body = new HtmlString(htmlRenderer.ToHtml(contentSection.Body).Result);
-                    domainArticle.Sections.Add(articleSection);
+                    var contentArticleSection = await _contentService.GetEntry<ArticleTable>(section.Sys.Id);
+
+                    var tableHtml = GetTableHtml((JProperty)contentArticleSection.Table.First);
+
+                    if(contentSection != null)
+                    {
+                        var articleSection = new DomainArticleSection();
+                        articleSection.Title = contentArticleSection.Title;
+                        articleSection.Body = new HtmlString(tableHtml);
+                        domainArticle.Sections.Add(articleSection);
+                    }
+                }
+                else
+                {
+                    var contentArticleSection = await _contentService.GetEntry<ArticleSection>(section.Sys.Id);
+                    if(contentSection != null)
+                    {
+                        var articleSection = new DomainArticleSection();
+                        articleSection.Title = contentArticleSection.Title;
+                        articleSection.Slug = contentArticleSection.Slug;
+                        articleSection.Body = new HtmlString(htmlRenderer.ToHtml(contentArticleSection.Body).Result);
+                        domainArticle.Sections.Add(articleSection);
+                    }
                 }
             }
 
@@ -86,6 +109,50 @@ namespace SFA.DAS.Experiment.Application.Cms.Mapping
             }
 
             await _cacheService.Set(lookupKey, JsonConvert.SerializeObject(lookup));
+        }
+
+        static string GetTableHtml(JProperty tableData)
+        {
+            var sb = new StringBuilder();
+
+            sb.Append("<table class=\"fiu-table\">");
+
+            var listOfRows = tableData.Children().First().Children();
+
+            GetTableHead(sb, (JArray)listOfRows.First());
+            GetTableBody(sb, listOfRows.Skip(1).ToList());
+           
+            sb.Append("</table>");
+            
+            return sb.ToString();
+        }
+
+        private static void GetTableBody(StringBuilder sb, List<JToken> bodyRows)
+        {
+            sb.Append("<tbody>");
+            foreach (var row in bodyRows)
+            {
+                sb.Append("<tr>");
+                foreach (string column in row)
+                {
+                    sb.Append("<td>" + column.Trim() + "</td>");
+                }
+                sb.Append("</tr>");
+            }
+            sb.Append("</tbody>");
+        }
+
+        private static void GetTableHead(StringBuilder sb, JArray row)
+        {
+            sb.Append("<thead>");
+            sb.Append("<tr>");
+            foreach (string column in row)
+            {
+                sb.Append("<th>" + column.Trim() + "</th>");    
+            }
+            sb.Append("<tr>");
+                    
+            sb.Append("</thead>");
         }
     }
 }
