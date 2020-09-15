@@ -20,7 +20,7 @@ namespace SFA.DAS.Experiment.Application.Cms.Services
 
         public async Task<List<T>> GetEntriesByType<T>() where T : IContentType
         {
-            var builder = new QueryBuilder<T>().ContentTypeIs(typeof(T).Name.FirstCharacterToLower()).Include(0);
+            var builder = new QueryBuilder<T>().ContentTypeIs(typeof(T).Name.FirstCharacterToLower()).Include(1);
             return (await _contentfulClient.GetEntries(builder)).ToList();
         }
 

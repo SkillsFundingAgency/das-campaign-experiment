@@ -11,8 +11,14 @@ namespace SFA.DAS.Experiment.Application.Cms.ContentTypes
         public string MetaDescription { get; set; }
         public string PageTitle { get; set; }
         public string HubType { get; set; }
-        public List<ArticleSection> Sections { get; set; }
+        
+        public List<SectionBase> Sections { get; set; }
         public LandingPage LandingPage { get; set; }
         public string Summary { get; set; }  
+    }
+
+    public class SectionBase
+    {
+        public SystemProperties Sys { get; set; }
     }
 }

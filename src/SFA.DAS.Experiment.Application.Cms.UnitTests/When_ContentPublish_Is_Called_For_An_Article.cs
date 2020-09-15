@@ -39,7 +39,7 @@ public class When_ContentPublish_Is_Called_For_An_Article
             LandingPage = new LandingPage{Sys = new SystemProperties{Id = "landingPage1Id"}},
             MetaDescription = "Article meta",
             HubType = "Apprentices", 
-            Sections = new List<ArticleSection>()
+            Sections = new List<SectionBase>()
         });
 
         _contentService.GetEntry<LandingPage>("landingPage1Id").Returns(new LandingPage{Slug = "landing-page", Title = "Landing Page 1"}); 
