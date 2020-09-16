@@ -24,10 +24,12 @@ namespace SFA.DAS.Experiment.Application.Cms.Services
             return (await _contentfulClient.GetEntries(builder)).ToList();
         }
 
-        public async Task<T> GetEntry<T>(string id)
+        public async Task<T> GetEntry<T>(string id) where T : IContentType
         {
             try {
-                return await _contentfulClient.GetEntry<T>(id);
+                var builder = new QueryBuilder<T>().ContentTypeIs(typeof(T).Name.FirstCharacterToLower()).Include(1).FieldEquals("sys.id", id);
+                var entry = (await _contentfulClient.GetEntries(builder)).FirstOrDefault();
+                return entry;
             }
             catch(ContentfulException ex){
                 if (ex.StatusCode == 404)
@@ -42,7 +44,7 @@ namespace SFA.DAS.Experiment.Application.Cms.Services
     public interface IContentService
     {
         Task<List<T>> GetEntriesByType<T>() where T : IContentType;
-        Task<T> GetEntry<T>(string id);
+        Task<T> GetEntry<T>(string id) where T : IContentType;
     }
 
     public static class StringExtensions
