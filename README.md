@@ -79,6 +79,6 @@ The **ContentRefresh** Function can be executed by either a POST externally, or 
 ```
 
 ## Developer Setup
-- [dotnet 2.1](https://dotnet.microsoft.com/download)
-- [Azure Functions Core Tools](https://docs.microsoft.com/en-us/azure/azure-functions/functions-run-local?tabs=windows) 
+- [dotnet 3.1](https://dotnet.microsoft.com/download)
+- [Azure Functions Core Tools - Version 3](https://docs.microsoft.com/en-us/azure/azure-functions/functions-run-local?tabs=windows) 
 
