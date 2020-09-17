@@ -59,34 +59,6 @@
             },
             "defaultValue": 2
         },
-        "sqlServerResourceGroupName": {
-            "type": "string"
-        },
-        "sqlServerName": {
-            "type": "string"
-        },
-        "elasticPoolName": {
-            "defaultValue": "",
-            "type": "string"
-        },
-        "logAnalyticsSubscriptionId": {
-            "type": "string",
-            "defaultValue": "[subscription().subscriptionId]"
-        },
-        "logAnalyticsResourceGroup": {
-            "type": "string"
-        },
-        "logAnalyticsWorkspaceName": {
-            "type": "string"
-        },
-        "databaseSkuName": {
-            "type": "string",
-            "defaultValue": "S0"
-        },
-        "databaseTier": {
-            "type": "string",
-            "defaultValue": "Standard"
-        },
         "functionsExtensionVersion": {
             "type": "string",
             "defaultValue": "~3"
@@ -96,8 +68,7 @@
         "deploymentUrlBase": "https://raw.githubusercontent.com/SkillsFundingAgency/das-platform-building-blocks/master/templates/",
         "resourceNamePrefix": "[toLower(concat('das-', parameters('resourceEnvironmentName'),'-', parameters('serviceName')))]",
         "appServicePlanName": "[concat(variables('resourceNamePrefix'),'wkr-asp')]",
-        "functionAppName": "[concat(variables('resourceNamePrefix'),'-fa')]",
-        "databaseName": "[concat(variables('resourceNamePrefix'),'-db')]"
+        "functionAppName": "[concat(variables('resourceNamePrefix'),'-fa')]"        
     },
     "resources": [
         {
@@ -208,55 +179,12 @@
                 "function-app-insights",
                 "worker-app-service-plan"
             ]
-        },
-        {
-            "apiVersion": "2017-05-10",
-            "name": "sql-database",
-            "type": "Microsoft.Resources/deployments",
-            "resourceGroup": "[parameters('sqlServerResourceGroupName')]",
-            "properties": {
-                "mode": "Incremental",
-                "templateLink": {
-                    "uri": "[concat(variables('deploymentUrlBase'), 'sql-database.json')]",
-                    "contentVersion": "1.0.0.0"
-                },
-                "parameters": {
-                    "databaseName": {
-                        "value": "[variables('databaseName')]"
-                    },
-                    "sqlServerName": {
-                        "value": "[parameters('sqlServerName')]"
-                    },
-                    "elasticPoolName": {
-                        "value": "[parameters('elasticPoolName')]"
-                    },
-                    "logAnalyticsSubscriptionId": {
-                        "value": "[parameters('logAnalyticsSubscriptionId')]"
-                    },
-                    "logAnalyticsResourceGroup": {
-                        "value": "[parameters('logAnalyticsResourceGroup')]"
-                    },
-                    "logAnalyticsWorkspaceName": {
-                        "value": "[parameters('logAnalyticsWorkspaceName')]"
-                    },
-                    "databaseSkuName": {
-                        "value": "[parameters('databaseSkuName')]"
-                    },
-                    "databaseTier": {
-                        "value": "[parameters('databaseTier')]"
-                    }
-                }
-            }
         }
     ],
     "outputs": {
         "FunctionAppName": {
             "type": "string",
             "value": "[variables('functionAppName')]"
-        },
-        "DatabaseName": {
-            "type": "string",
-            "value": "[variables('databaseName')]"
         }
     }
 }
