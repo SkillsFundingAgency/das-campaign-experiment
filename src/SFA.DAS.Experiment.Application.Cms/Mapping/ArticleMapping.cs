@@ -49,17 +49,17 @@ namespace SFA.DAS.Experiment.Application.Cms.Mapping
             foreach (var section in article.Sections)
             {
                 await UpdateArticleSectionLookup(section.Sys.Id, article.Sys.Id);
-                var contentSection = await _contentService.GetEntry<ArticleSection>(section.Sys.Id);
+                
                 var articleSectionType = section.Sys.ContentType.SystemProperties.Id;
 
                 if(articleSectionType == "articleTable")
                 {
                     var contentArticleSection = await _contentService.GetEntry<ArticleTable>(section.Sys.Id);
-
-                    var tableHtml = GetTableHtml((JProperty)contentArticleSection.Table.First);
-
-                    if(contentSection != null)
+                    
+                    if(contentArticleSection != null)
                     {
+                        var tableHtml = GetTableHtml((JProperty)contentArticleSection.Table.First);
+                    
                         var articleSection = new DomainArticleSection();
                         articleSection.Title = contentArticleSection.Title;
                         articleSection.Body = new HtmlString(tableHtml);
@@ -69,7 +69,7 @@ namespace SFA.DAS.Experiment.Application.Cms.Mapping
                 else
                 {
                     var contentArticleSection = await _contentService.GetEntry<ArticleSection>(section.Sys.Id);
-                    if(contentSection != null)
+                    if(contentArticleSection != null)
                     {
                         var articleSection = new DomainArticleSection();
                         articleSection.Title = contentArticleSection.Title;
