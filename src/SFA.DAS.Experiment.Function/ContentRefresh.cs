@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
 using SFA.DAS.Experiment.Application.Cms.ContentRefresh;
 
 namespace SFA.DAS.Experiment.Function
@@ -31,6 +30,12 @@ namespace SFA.DAS.Experiment.Function
             };
             objectResult.ContentTypes.Add("application/json");
             return objectResult;
+        }
+
+        [FunctionName("ContentRefresherCron")]
+        public async Task RunCron([TimerTrigger("0 0 */1 * * *")]TimerInfo timer, ILogger log)
+        {
+            await _mediator.Send(new ContentRefreshRequest());
         }
     }
 }
