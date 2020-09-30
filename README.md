@@ -13,6 +13,7 @@ These Functions support the cache of content (a Redis instance) that the [Fire i
 There are currently three Functions:
 
 - **ContentRefresh** - Performs a complete refresh of the cache from Contentful.
+- **ContentRefresherCron** - Does the same as ContentRefresh, but on a timer every hour.
 - **ContentPublish** - Updates / Creates a content item in the cache. This Function is triggered by a Contentful Webhook when an item on Contentful is published.
 - **ContentRemove** - Removes a content item from the cache. This Function is triggered by a Contentful Webhook when an item on Contentful is unpublished, archived or deleted.
 
