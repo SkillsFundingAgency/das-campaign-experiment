@@ -59,7 +59,7 @@
             },
             "defaultValue": 2
         },
-        "workerAspTier": {
+        "appServicePlanTier": {
             "type": "string",
             "defaultValue": "Standard"
         },
@@ -158,7 +158,7 @@
                         "value": "[parameters('appServicePlanInstances')]"
                     },
                     "nonASETier": {
-                        "value": "[parameters('workerAspTier')]"
+                        "value": "[parameters('appServicePlanTier')]"
                     }
                 }
             }
